@@ -1,9 +1,9 @@
 'use client';
 
 import { useCartStore } from '../../store/cartStore';
+import Link from 'next/link'; // Importado para o clique funcionar
 
 export default function Minicart() {
-  // Alterado de isOpen para isCartOpen
   const { items, isCartOpen, closeCart, removeItem } = useCartStore();
 
   const subtotal = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
@@ -12,6 +12,7 @@ export default function Minicart() {
 
   return (
     <>
+      {/* Overlay */}
       {isCartOpen && (
         <div 
           className="fixed inset-0 bg-black/50 z-40 transition-opacity"
@@ -19,6 +20,7 @@ export default function Minicart() {
         />
       )}
 
+      {/* Gaveta */}
       <div 
         className={`fixed top-0 right-0 h-full w-[90%] md:w-[400px] bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col ${
           isCartOpen ? 'translate-x-0' : 'translate-x-full'
@@ -29,6 +31,7 @@ export default function Minicart() {
           <button onClick={closeCart} className="text-gray-400 hover:text-black text-2xl leading-none">&times;</button>
         </div>
 
+        {/* Barra de Frete */}
         <div className="p-4 bg-gray-50 text-center text-sm border-b border-gray-100">
           {valorParaFreteGratis > 0 ? (
             <p>Faltam <span className="font-bold text-[#FADADD]">R$ {valorParaFreteGratis.toFixed(2).replace('.', ',')}</span> para <span className="font-bold">FRETE GRÁTIS</span></p>
@@ -43,6 +46,7 @@ export default function Minicart() {
           </div>
         </div>
 
+        {/* Lista de Itens */}
         <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
           {items.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center text-gray-400">
@@ -70,17 +74,29 @@ export default function Minicart() {
           )}
         </div>
 
+        {/* Rodapé e Botão Finalizar */}
         <div className="p-4 border-t border-gray-100 bg-white">
           <div className="flex justify-between items-center mb-4">
             <span className="uppercase text-sm font-semibold text-gray-500">Subtotal</span>
             <span className="font-bold text-lg text-[#333333]">R$ {subtotal.toFixed(2).replace('.', ',')}</span>
           </div>
-          <button 
-            disabled={items.length === 0}
-            className="w-full py-4 bg-[#333333] text-white uppercase tracking-widest text-sm font-bold hover:bg-[#FADADD] transition-colors disabled:bg-gray-200 disabled:cursor-not-allowed"
-          >
-            Finalizar Compra
-          </button>
+          
+          {items.length > 0 ? (
+            <Link 
+              href="/checkout" 
+              onClick={closeCart}
+              className="w-full py-4 bg-[#333333] text-white text-center block uppercase tracking-widest text-sm font-bold hover:bg-[#FADADD] hover:text-[#333333] transition-colors"
+            >
+              Finalizar Compra
+            </Link>
+          ) : (
+            <button 
+              disabled 
+              className="w-full py-4 bg-gray-200 text-gray-400 uppercase tracking-widest text-sm font-bold cursor-not-allowed"
+            >
+              Carrinho Vazio
+            </button>
+          )}
         </div>
       </div>
     </>
