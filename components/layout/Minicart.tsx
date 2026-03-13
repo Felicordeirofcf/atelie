@@ -3,7 +3,8 @@
 import { useCartStore } from '../../store/cartStore';
 
 export default function Minicart() {
-  const { items, isOpen, closeCart, removeItem } = useCartStore();
+  // Alterado de isOpen para isCartOpen
+  const { items, isCartOpen, closeCart, removeItem } = useCartStore();
 
   const subtotal = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const valorParaFreteGratis = 500 - subtotal;
@@ -11,7 +12,7 @@ export default function Minicart() {
 
   return (
     <>
-      {isOpen && (
+      {isCartOpen && (
         <div 
           className="fixed inset-0 bg-black/50 z-40 transition-opacity"
           onClick={closeCart}
@@ -20,7 +21,7 @@ export default function Minicart() {
 
       <div 
         className={`fixed top-0 right-0 h-full w-[90%] md:w-[400px] bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+          isCartOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className="p-4 border-b border-gray-100 flex justify-between items-center">

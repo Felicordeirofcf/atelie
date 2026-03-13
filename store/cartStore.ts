@@ -11,17 +11,24 @@ export interface CartItem {
 }
 
 interface CartStore {
+  // Estado do Carrinho
   items: CartItem[];
-  isOpen: boolean;
+  isCartOpen: boolean;
   addItem: (item: Omit<CartItem, 'quantity' | 'id'>) => void;
   removeItem: (id: string) => void;
   openCart: () => void;
   closeCart: () => void;
+  
+  // Estado do Menu Mobile
+  isMenuOpen: boolean;
+  openMenu: () => void;
+  closeMenu: () => void;
 }
 
 export const useCartStore = create<CartStore>((set) => ({
+  // Implementação do Carrinho
   items: [],
-  isOpen: false,
+  isCartOpen: false, // Renomeado de isOpen para isCartOpen
   
   addItem: (newItem) => set((state) => {
     const uniqueId = `${newItem.productId}-${newItem.size}`;
@@ -32,13 +39,13 @@ export const useCartStore = create<CartStore>((set) => ({
         items: state.items.map(item => 
           item.id === uniqueId ? { ...item, quantity: item.quantity + 1 } : item
         ),
-        isOpen: true
+        isCartOpen: true
       };
     }
     
     return { 
       items: [...state.items, { ...newItem, id: uniqueId, quantity: 1 }],
-      isOpen: true 
+      isCartOpen: true 
     };
   }),
   
@@ -46,6 +53,11 @@ export const useCartStore = create<CartStore>((set) => ({
     items: state.items.filter(item => item.id !== id)
   })),
   
-  openCart: () => set({ isOpen: true }),
-  closeCart: () => set({ isOpen: false }),
+  openCart: () => set({ isCartOpen: true, isMenuOpen: false }), // Fecha o menu se abrir o carrinho
+  closeCart: () => set({ isCartOpen: false }),
+
+  // Implementação do Menu Mobile
+  isMenuOpen: false,
+  openMenu: () => set({ isMenuOpen: true, isCartOpen: false }), // Fecha o carrinho se abrir o menu
+  closeMenu: () => set({ isMenuOpen: false }),
 }));
