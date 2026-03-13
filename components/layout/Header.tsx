@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image'; // Importado para performance
 import { useCartStore } from '../../store/cartStore';
 
 export default function Header() {
@@ -10,11 +11,11 @@ export default function Header() {
 
   return (
     <>
-      <header className="w-full border-b border-gray-100 py-4 px-4 md:px-6 flex justify-between items-center sticky top-0 bg-white/90 backdrop-blur-md z-30">
+      <header className="w-full border-b border-gray-100 py-2.5 px-4 md:px-6 flex justify-between items-center sticky top-0 bg-white/95 backdrop-blur-md z-30">
         
-        {/* Lado Esquerdo: Ícone Hambúrguer (Mobile) ou Links (Desktop) */}
+        {/* Lado Esquerdo: Links (Desktop) ou Hambúrguer (Mobile) */}
         <div className="flex-1 flex items-center justify-start">
-          {/* Botão Menu (Aparece só no Celular) */}
+          {/* Botão Menu (Mobile) */}
           <button 
             onClick={openMenu}
             className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none"
@@ -24,8 +25,8 @@ export default function Header() {
             <span className="block w-6 h-0.5 bg-[#333333]"></span>
           </button>
 
-          {/* Links Navegação (Aparece só no Desktop) */}
-          <nav className="hidden md:flex gap-6 text-sm uppercase tracking-wide">
+          {/* Links Navegação (Desktop) */}
+          <nav className="hidden md:flex gap-6 text-xs uppercase tracking-wider">
             <Link href="/categoria/novidades" className="hover:text-[#FADADD] transition-colors">Novidades</Link>
             <Link href="/categoria/roupas" className="hover:text-[#FADADD] transition-colors">Roupas</Link>
             <Link href="/categoria/acessorios" className="hover:text-[#FADADD] transition-colors">Acessórios</Link>
@@ -33,11 +34,19 @@ export default function Header() {
           </nav>
         </div>
 
-        {/* Centro: Logo */}
+        {/* Centro: Logo Experimental */}
         <div className="flex-1 flex justify-center">
           <Link href="/">
-            <div className="text-xl md:text-2xl font-serif tracking-widest uppercase cursor-pointer text-center">
-              Ateliê Luz de Maria
+            <div className="cursor-pointer">
+              {/* Logo Experimental - Usando Image do Next.js */}
+              <Image 
+                src="/logo.png" 
+                alt="Ateliê Luz de Maria Logo" 
+                width={150} // Ajustado para ser delicado
+                height={50} // Proporcional
+                className="object-contain h-10 w-auto" // Controlando altura via Tailwind
+                priority // Carrega primeiro para performance
+              />
             </div>
           </Link>
         </div>
@@ -48,8 +57,8 @@ export default function Header() {
             onClick={openCart}
             className="text-xs md:text-sm uppercase font-semibold flex items-center gap-2 hover:text-[#FADADD] transition-colors"
           >
-            <span className="hidden md:block">Carrinho</span>
-            {/* Ícone de Sacola simples para o mobile */}
+            <span className="hidden md:block text-xs uppercase tracking-wide">Carrinho</span>
+            {/* Ícone de Sacola simples */}
             <div className="relative">
               <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -62,8 +71,7 @@ export default function Header() {
             </div>
           </button>
         </div>
-      </header>
-
+      </header>  
       {/* --- MENU MOBILE GAVETA (Sidebar Esquerda) --- */}
       {/* Fundo escuro */}
       {isMenuOpen && (
