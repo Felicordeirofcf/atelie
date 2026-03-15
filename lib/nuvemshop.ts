@@ -19,7 +19,7 @@ async function fetchNuvemshop(endpoint: string, options: RequestInit = {}) {
     ...options.headers,
   };
 
-  // Mantemos o cache: 'no-store' para testes. Depois, em produção, você pode voltar para revalidate.
+  // Mantemos o cache: 'no-store' para testes.
   const response = await fetch(url, { ...options, headers, cache: 'no-store' });
 
   if (!response.ok) {
@@ -30,9 +30,8 @@ async function fetchNuvemshop(endpoint: string, options: RequestInit = {}) {
   return response.json();
 }
 
-// 1. Buscar Produtos (Blindado e com Categorias)
+// 1. Buscar Produtos (Blindado, Categorias e Handle Limpo)
 export async function getProducts(q?: string) {
-  // Se passar uma query (ex: "vestidos"), ele busca. Se não, traz todos.
   const endpoint = q ? `/products?q=${q}` : '/products';
   const data = await fetchNuvemshop(endpoint);
   
@@ -43,23 +42,34 @@ export async function getProducts(q?: string) {
   }
 
   // Formatamos os dados confusos da Nuvemshop para um formato simples pro nosso site
-  return data.map((product: any) => ({
-    id: product.id,
-    name: product.name?.pt || product.name || 'Produto Sem Nome',
-    price: parseFloat(product.variants?.[0]?.price || '0'),
-    originalPrice: product.variants?.[0]?.promotional_price ? parseFloat(product.variants[0].compare_at_price || '0') : null,
-    image: product.images?.[0]?.src || 'https://via.placeholder.com/800x1000?text=Sem+Foto',
-    handle: product.handle?.pt || product.handle || String(product.id),
+  return data.map((product: any) => {
     
-    // NOVA LINHA: Puxando as categorias (slugs) exatas da Nuvemshop para o filtro funcionar
-    categories: product.categories?.map((c: any) => c.handle?.pt || c.handle || '') || [],
-    
-    variants: product.variants?.map((v: any) => ({
-      id: v.id,
-      size: v.values?.[0]?.pt || v.values?.[0] || 'U',
-      stock: v.stock
-    })) || []
-  }));
+    // BLINDAGEM DO LINK: Garante que vamos pegar o texto puro do handle
+    let safeHandle = String(product.id);
+    if (product.handle) {
+      if (typeof product.handle === 'string') safeHandle = product.handle;
+      else if (product.handle.pt) safeHandle = product.handle.pt;
+      else if (Object.values(product.handle)[0]) safeHandle = String(Object.values(product.handle)[0]);
+    }
+
+    return {
+      id: product.id,
+      name: product.name?.pt || product.name || 'Produto Sem Nome',
+      price: parseFloat(product.variants?.[0]?.price || '0'),
+      originalPrice: product.variants?.[0]?.promotional_price ? parseFloat(product.variants[0].compare_at_price || '0') : null,
+      image: product.images?.[0]?.src || 'https://via.placeholder.com/800x1000?text=Sem+Foto',
+      handle: safeHandle.toLowerCase().trim(), // Handle 100% limpo
+      
+      // Categorias (slugs) exatas da Nuvemshop para o filtro funcionar
+      categories: product.categories?.map((c: any) => c.handle?.pt || c.handle || '') || [],
+      
+      variants: product.variants?.map((v: any) => ({
+        id: v.id,
+        size: v.values?.[0]?.pt || v.values?.[0] || 'U',
+        stock: v.stock
+      })) || []
+    };
+  });
 }
 
 // 2. Criar Checkout

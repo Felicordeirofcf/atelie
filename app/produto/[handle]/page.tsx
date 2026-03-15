@@ -3,27 +3,27 @@ import ProductClient from './ProductClient';
 import { notFound } from 'next/navigation';
 
 export default async function ProductPage({ params }: { params: { handle: string } }) {
-  // 1. Decodifica a URL (Lidando com espaços e caracteres especiais como %20)
-  const handleDaUrl = decodeURIComponent(params.handle);
+  // 1. Truque de Promise para compatibilidade com as versões mais recentes do Next.js 15+
+  const resolvedParams = await Promise.resolve(params);
+  
+  // 2. Limpa a URL que a cliente clicou
+  const handleDaUrl = decodeURIComponent(resolvedParams.handle).toLowerCase().trim();
 
-  // 2. Puxa todos os produtos reais da Nuvemshop
+  // 3. Puxa todos os produtos da loja
   const products = await getProducts();
   
-  // 3. Busca super inteligente: Compara tudo em minúsculo e limpo
+  // 4. Busca o produto exato comparando o texto limpo
   const product = products.find((p: any) => {
-    // Garante que o handle do produto seja um texto limpo
     const handleDoProduto = String(p.handle).toLowerCase().trim();
-    const handleBuscado = String(handleDaUrl).toLowerCase().trim();
-    
-    // Tenta achar pelo Handle (nome na URL) OU pelo ID (caso a Nuvemshop tenha usado o ID)
-    return handleDoProduto === handleBuscado || String(p.id) === handleBuscado;
+    // Tenta achar pelo Handle (nome na URL) OU pelo ID
+    return handleDoProduto === handleDaUrl || String(p.id) === handleDaUrl;
   });
 
-  // 4. Se o produto realmente não existir na loja, aí sim mostra a página de Erro 404
+  // 5. Se não achou de jeito nenhum, vai pra página de erro 404
   if (!product) {
     notFound();
   }
 
-  // 5. Se encontrou, manda os dados para a tela renderizar a foto e o botão de compra
+  // 6. Se achou, carrega a tela interativa do produto (ProductClient)
   return <ProductClient product={product} />;
 }
