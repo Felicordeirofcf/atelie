@@ -27,7 +27,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row gap-10">
         
-        {/* Filtros Lateral (Versão simplificada para Server Component) */}
+        {/* Filtros Lateral */}
         <aside className="hidden md:flex w-1/4 flex-col gap-8">
           <div className="border-b border-gray-100 pb-6">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-[#333333] mb-4">Categorias</h3>
@@ -35,7 +35,11 @@ export default async function CategoryPage({ params }: { params: { slug: string 
               <Link href="/categoria/todos" className="text-sm text-gray-600 hover:text-[#FADADD]">Ver Todos</Link>
               <Link href="/categoria/biquinis" className="text-sm text-gray-600 hover:text-[#FADADD]">Biquínis</Link>
               <Link href="/categoria/vestidos" className="text-sm text-gray-600 hover:text-[#FADADD]">Vestidos</Link>
+              <Link href="/categoria/tops-e-croppeds" className="text-sm text-gray-600 hover:text-[#FADADD]">Top's e Cropped's</Link>
+              <Link href="/categoria/shorts-jeans" className="text-sm text-gray-600 hover:text-[#FADADD]">Shorts Jeans</Link>
               <Link href="/categoria/conjuntos" className="text-sm text-gray-600 hover:text-[#FADADD]">Conjuntos</Link>
+              <Link href="/categoria/bodys" className="text-sm text-gray-600 hover:text-[#FADADD]">Body's</Link>
+              <Link href="/categoria/sapatos" className="text-sm text-gray-600 hover:text-[#FADADD]">Sapatos</Link>
             </div>
           </div>
         </aside>

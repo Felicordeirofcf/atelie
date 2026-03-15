@@ -18,19 +18,23 @@ export default function Header() {
           {/* Botão Menu (Mobile) */}
           <button 
             onClick={openMenu}
-            className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none"
+            className="xl:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none"
           >
             <span className="block w-6 h-0.5 bg-[#333333]"></span>
             <span className="block w-6 h-0.5 bg-[#333333]"></span>
             <span className="block w-6 h-0.5 bg-[#333333]"></span>
           </button>
 
-          {/* Links Navegação (Desktop) - Atualizados com as novas categorias */}
-          <nav className="hidden md:flex gap-6 text-xs uppercase tracking-wider">
-            <Link href="/categoria/todos" className="hover:text-[#FADADD] transition-colors">Ver Todos</Link>
+          {/* Links Navegação (Desktop) - Alinhado com a Nuvemshop */}
+          <nav className="hidden xl:flex gap-5 text-[11px] uppercase tracking-wider font-medium text-gray-700">
+            <Link href="/categoria/todos" className="hover:text-[#FADADD] transition-colors">Todos</Link>
             <Link href="/categoria/biquinis" className="hover:text-[#FADADD] transition-colors">Biquínis</Link>
             <Link href="/categoria/vestidos" className="hover:text-[#FADADD] transition-colors">Vestidos</Link>
+            <Link href="/categoria/tops-e-croppeds" className="hover:text-[#FADADD] transition-colors">Top's e Cropped's</Link>
+            <Link href="/categoria/shorts-jeans" className="hover:text-[#FADADD] transition-colors">Shorts</Link>
             <Link href="/categoria/conjuntos" className="hover:text-[#FADADD] transition-colors">Conjuntos</Link>
+            <Link href="/categoria/bodys" className="hover:text-[#FADADD] transition-colors">Body's</Link>
+            <Link href="/categoria/sapatos" className="hover:text-[#FADADD] transition-colors">Sapatos</Link>
           </nav>
         </div>
 
@@ -41,9 +45,9 @@ export default function Header() {
               <Image 
                 src="/logo.png" 
                 alt="Ateliê Luz de Maria Logo" 
-                width={150} 
-                height={50} 
-                className="object-contain h-10 w-auto" 
+                width={140} 
+                height={45} 
+                className="object-contain h-9 xl:h-10 w-auto" 
                 priority 
               />
             </div>
@@ -73,21 +77,19 @@ export default function Header() {
       </header>
 
       {/* --- MENU MOBILE GAVETA (Sidebar Esquerda) --- */}
-      {/* Fundo escuro */}
       {isMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity"
+          className="fixed inset-0 bg-black/50 z-40 xl:hidden transition-opacity"
           onClick={closeMenu}
         />
       )}
 
-      {/* Gaveta do Menu - Estilo exato da Nuvemshop */}
+      {/* Gaveta do Menu */}
       <div 
-        className={`fixed top-0 left-0 h-full w-[85%] max-w-[350px] bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col md:hidden ${
+        className={`fixed top-0 left-0 h-full w-[85%] max-w-[350px] bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col xl:hidden ${
           isMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Cabeçalho do Menu com a setinha de voltar */}
         <div className="p-4 flex items-center border-b border-gray-100/50">
           <button onClick={closeMenu} className="text-gray-500 hover:text-black">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -97,7 +99,6 @@ export default function Header() {
           <h2 className="text-[15px] font-medium text-center flex-1 pr-5 text-[#333333]">Produtos</h2>
         </div>
 
-        {/* Lista de Categorias limpa (sem bordas, igual ao print) */}
         <nav className="flex-1 flex flex-col pt-2 overflow-y-auto text-[15px] text-[#333333]">
           <Link href="/categoria/todos" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
             Ver todos os produtos
@@ -125,7 +126,6 @@ export default function Header() {
           </Link>
         </nav>
 
-        {/* Rodapé de Usuário (Igual ao print) */}
         <div className="p-5 border-t border-gray-100 flex items-center gap-3 text-[14px] text-[#333333]">
           <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -133,7 +133,7 @@ export default function Header() {
           <div>
             <Link href="/minha-conta" onClick={closeMenu} className="hover:underline">Iniciar sessão</Link>
             <span className="mx-1">.</span>
-            <Link href="/cadastro" onClick={closeMenu} className="hover:underline">Criar uma conta</Link>
+            <Link href="/minha-conta" onClick={closeMenu} className="hover:underline">Criar uma conta</Link>
           </div>
         </div>
       </div>
