@@ -19,7 +19,7 @@ async function fetchNuvemshop(endpoint: string, options: RequestInit = {}) {
     ...options.headers,
   };
 
-  // O Next.js faz cache automático. revalidate: 60 atualiza os produtos a cada 1 minuto.
+  // Mantemos o cache: 'no-store' para testes. Depois, em produção, você pode voltar para revalidate.
   const response = await fetch(url, { ...options, headers, cache: 'no-store' });
 
   if (!response.ok) {
@@ -30,27 +30,35 @@ async function fetchNuvemshop(endpoint: string, options: RequestInit = {}) {
   return response.json();
 }
 
-// 1. Buscar Produtos (Pode ser filtrado por Categoria/Busca)
+// 1. Buscar Produtos (Blindado e com Categorias)
 export async function getProducts(q?: string) {
   // Se passar uma query (ex: "vestidos"), ele busca. Se não, traz todos.
   const endpoint = q ? `/products?q=${q}` : '/products';
   const data = await fetchNuvemshop(endpoint);
   
-  if (!data) return []; // Retorna array vazio se der erro ou não tiver chave
+  // Blinda contra erros: Se a resposta não for um array de produtos, retorna vazio
+  if (!data || !Array.isArray(data)) {
+    console.warn("Nenhum produto encontrado ou resposta inválida da API.");
+    return []; 
+  }
 
   // Formatamos os dados confusos da Nuvemshop para um formato simples pro nosso site
   return data.map((product: any) => ({
     id: product.id,
-    name: product.name.pt,
-    price: parseFloat(product.variants[0]?.price || '0'),
-    originalPrice: product.variants[0]?.promotional_price ? parseFloat(product.variants[0]?.compare_at_price || '0') : null,
-    image: product.images[0]?.src || 'https://via.placeholder.com/800x1000?text=Sem+Foto',
-    handle: product.handle.pt,
-    variants: product.variants.map((v: any) => ({
+    name: product.name?.pt || product.name || 'Produto Sem Nome',
+    price: parseFloat(product.variants?.[0]?.price || '0'),
+    originalPrice: product.variants?.[0]?.promotional_price ? parseFloat(product.variants[0].compare_at_price || '0') : null,
+    image: product.images?.[0]?.src || 'https://via.placeholder.com/800x1000?text=Sem+Foto',
+    handle: product.handle?.pt || product.handle || String(product.id),
+    
+    // NOVA LINHA: Puxando as categorias (slugs) exatas da Nuvemshop para o filtro funcionar
+    categories: product.categories?.map((c: any) => c.handle?.pt || c.handle || '') || [],
+    
+    variants: product.variants?.map((v: any) => ({
       id: v.id,
-      size: v.values[0]?.pt || 'U',
+      size: v.values?.[0]?.pt || v.values?.[0] || 'U',
       stock: v.stock
-    }))
+    })) || []
   }));
 }
 
