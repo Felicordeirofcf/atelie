@@ -15,7 +15,6 @@ export default function Header() {
         
         {/* Lado Esquerdo: Links (Desktop) ou Hambúrguer (Mobile) */}
         <div className="flex-1 flex items-center justify-start">
-          {/* Botão Menu (Mobile) */}
           <button 
             onClick={openMenu}
             className="xl:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none"
@@ -25,8 +24,9 @@ export default function Header() {
             <span className="block w-6 h-0.5 bg-[#333333]"></span>
           </button>
 
-          {/* Links Navegação (Desktop) - Alinhado com a Nuvemshop */}
+          {/* Links Navegação (Desktop) */}
           <nav className="hidden xl:flex gap-5 text-[11px] uppercase tracking-wider font-medium text-gray-700">
+            <Link href="/" className="hover:text-[#FADADD] transition-colors font-bold text-[#333333]">Início</Link>
             <Link href="/categoria/todos" className="hover:text-[#FADADD] transition-colors">Todos</Link>
             <Link href="/categoria/biquinis" className="hover:text-[#FADADD] transition-colors">Biquínis</Link>
             <Link href="/categoria/vestidos" className="hover:text-[#FADADD] transition-colors">Vestidos</Link>
@@ -61,7 +61,6 @@ export default function Header() {
             className="text-xs md:text-sm uppercase font-semibold flex items-center gap-2 hover:text-[#FADADD] transition-colors"
           >
             <span className="hidden md:block text-xs uppercase tracking-wide">Carrinho</span>
-            {/* Ícone de Sacola */}
             <div className="relative">
               <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -76,7 +75,7 @@ export default function Header() {
         </div>
       </header>
 
-      {/* --- MENU MOBILE GAVETA (Sidebar Esquerda) --- */}
+      {/* --- MENU MOBILE GAVETA --- */}
       {isMenuOpen && (
         <div 
           className="fixed inset-0 bg-black/50 z-40 xl:hidden transition-opacity"
@@ -84,7 +83,6 @@ export default function Header() {
         />
       )}
 
-      {/* Gaveta do Menu */}
       <div 
         className={`fixed top-0 left-0 h-full w-[85%] max-w-[350px] bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col xl:hidden ${
           isMenuOpen ? 'translate-x-0' : '-translate-x-full'
@@ -96,10 +94,13 @@ export default function Header() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <h2 className="text-[15px] font-medium text-center flex-1 pr-5 text-[#333333]">Produtos</h2>
+          <h2 className="text-[15px] font-medium text-center flex-1 pr-5 text-[#333333]">Menu</h2>
         </div>
 
         <nav className="flex-1 flex flex-col pt-2 overflow-y-auto text-[15px] text-[#333333]">
+          <Link href="/" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors font-bold border-b border-gray-100">
+            Início
+          </Link>
           <Link href="/categoria/todos" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
             Ver todos os produtos
           </Link>
