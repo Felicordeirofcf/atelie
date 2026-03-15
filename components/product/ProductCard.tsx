@@ -3,80 +3,76 @@
 import Link from 'next/link';
 import { useCartStore } from '../../store/cartStore';
 
-interface ProductVariant { id: number; size: string; }
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  handle: string;
-  variants: ProductVariant[];
-}
+export default function ProductCard({ product }: { product: any }) {
+  const { addItem, openCart } = useCartStore();
 
-export default function ProductCard({ product }: { product: Product }) {
-  const { addItem } = useCartStore();
+  const handleQuickAdd = (e: React.MouseEvent, variantSize: string) => {
+    e.preventDefault(); // Evita que o clique no botão abra a página do produto
+    
+    // Acha a variante correta para pegar o ID real da Nuvemshop
+    const variant = product.variants?.find((v: any) => v.size === variantSize);
+    const variantId = variant ? variant.id : product.id;
 
-  const handleQuickAdd = (variantSize: string) => {
     addItem({
-      productId: product.id,
+      id: variantId,
       name: product.name,
       price: product.price,
       image: product.image,
       size: variantSize,
+      quantity: 1 // Adicionado a quantidade obrigatória
     });
+    
+    openCart();
   };
 
+  // Pega apenas tamanhos com estoque
+  const availableVariants = product.variants?.filter((v: any) => v.stock === null || v.stock > 0) || [];
+
   return (
-    <div className="group flex flex-col relative w-full bg-white overflow-hidden">
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-100">
-        <Link href={`/produto/${product.handle}`}>
-          <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-        </Link>
-        {product.originalPrice && (
-          <span className="absolute top-2 left-2 bg-[#333333] text-white text-xs font-bold px-2 py-1 uppercase">Sale</span>
-        )}
+    <div className="group flex flex-col cursor-pointer">
+      <Link href={`/produto/${product.handle}`} className="relative bg-gray-100 aspect-[3/4] overflow-hidden">
+        <img 
+          src={product.image} 
+          alt={product.name} 
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
         
-        {/* Hover Desktop */}
-        <div className="absolute bottom-0 left-0 w-full bg-white/90 backdrop-blur-sm transform translate-y-full transition-transform duration-300 group-hover:translate-y-0 p-3 flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100 hidden md:flex">
-          <span className="text-xs uppercase font-semibold text-gray-500">Comprar Rápido</span>
-          <div className="flex gap-2">
-            {product.variants.map((variant) => (
-              <button 
-                key={variant.id} 
-                onClick={() => handleQuickAdd(variant.size)} 
-                className="w-8 h-8 rounded-full border border-gray-300 text-sm flex items-center justify-center transition-colors hover:bg-[#FADADD] hover:border-[#FADADD] hover:text-white"
-              >
-                {variant.size}
-              </button>
-            ))}
+        {/* Hover: Quick Add Overlay */}
+        <div className="absolute bottom-0 left-0 w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white/90 backdrop-blur-sm flex flex-col gap-2">
+          <span className="text-[10px] uppercase font-bold text-center tracking-widest text-[#333333]">Adicionar Rápido</span>
+          <div className="flex justify-center flex-wrap gap-2">
+            {availableVariants.length > 0 ? (
+              availableVariants.slice(0, 4).map((variant: any) => (
+                <button 
+                  key={variant.id}
+                  onClick={(e) => handleQuickAdd(e, variant.size)}
+                  className="w-8 h-8 flex items-center justify-center border border-[#333333] text-xs hover:bg-[#333333] hover:text-white transition-colors"
+                >
+                  {variant.size}
+                </button>
+              ))
+            ) : (
+              <span className="text-xs text-red-500 font-bold uppercase tracking-widest">Esgotado</span>
+            )}
           </div>
         </div>
-      </div>
-      
-      {/* Infos do Produto */}
-      <div className="mt-4 flex flex-col items-center text-center px-2">
-        <Link href={`/produto/${product.handle}`}>
-          <h3 className="text-sm font-medium text-[#333333] uppercase tracking-wide truncate w-full">{product.name}</h3>
-        </Link>
-        <div className="mt-2 flex items-center gap-2">
-          {product.originalPrice && <span className="text-xs text-gray-400 line-through">R$ {product.originalPrice.toFixed(2).replace('.', ',')}</span>}
-          <span className="text-sm font-semibold text-[#333333]">R$ {product.price.toFixed(2).replace('.', ',')}</span>
+      </Link>
+
+      <Link href={`/produto/${product.handle}`} className="mt-4 flex flex-col">
+        <h3 className="text-sm font-medium uppercase tracking-widest text-[#333333] truncate">
+          {product.name}
+        </h3>
+        <div className="flex items-center gap-2 mt-1">
+          <span className="text-sm font-bold text-[#333333]">
+            R$ {product.price.toFixed(2).replace('.', ',')}
+          </span>
+          {product.originalPrice && product.originalPrice > product.price && (
+            <span className="text-xs text-gray-400 line-through">
+              R$ {product.originalPrice.toFixed(2).replace('.', ',')}
+            </span>
+          )}
         </div>
-        
-        {/* Mobile Buttons */}
-        <div className="mt-3 flex md:hidden gap-2 justify-center w-full">
-          {product.variants.map((variant) => (
-            <button 
-              key={variant.id} 
-              onClick={() => handleQuickAdd(variant.size)} 
-              className="w-8 h-8 rounded-full bg-gray-50 text-xs flex items-center justify-center active:bg-[#FADADD] active:text-white border border-gray-200"
-            >
-              {variant.size}
-            </button>
-          ))}
-        </div>
-      </div>
+      </Link>
     </div>
   );
 }
