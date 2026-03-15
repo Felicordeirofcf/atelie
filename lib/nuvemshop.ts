@@ -20,7 +20,7 @@ async function fetchNuvemshop(endpoint: string, options: RequestInit = {}) {
   };
 
   // O Next.js faz cache automático. revalidate: 60 atualiza os produtos a cada 1 minuto.
-  const response = await fetch(url, { ...options, headers, next: { revalidate: 60 } });
+  const response = await fetch(url, { ...options, headers, cache: 'no-store' });
 
   if (!response.ok) {
     console.error(`Erro Nuvemshop: ${response.status} - ${response.statusText}`);
