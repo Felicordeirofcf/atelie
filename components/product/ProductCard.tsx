@@ -19,13 +19,13 @@ export default function ProductCard({ product }: { product: any }) {
       price: product.price,
       image: product.image,
       size: variantSize,
-      quantity: 1 // Adicionado a quantidade obrigatória
+      quantity: 1
     });
     
     openCart();
   };
 
-  // Pega apenas tamanhos com estoque
+  // Pega apenas tamanhos/cores com estoque
   const availableVariants = product.variants?.filter((v: any) => v.stock === null || v.stock > 0) || [];
 
   return (
@@ -37,22 +37,23 @@ export default function ProductCard({ product }: { product: any }) {
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
         
-        {/* Hover: Quick Add Overlay */}
-        <div className="absolute bottom-0 left-0 w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white/90 backdrop-blur-sm flex flex-col gap-2">
-          <span className="text-[10px] uppercase font-bold text-center tracking-widest text-[#333333]">Adicionar Rápido</span>
+        {/* Hover: Quick Add Overlay Elegante */}
+        <div className="absolute bottom-0 left-0 w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white/95 backdrop-blur-sm flex flex-col gap-3 border-t border-gray-100">
+          <span className="text-[10px] uppercase font-bold text-center tracking-[0.2em] text-[#333333]">Adicionar</span>
+          
           <div className="flex justify-center flex-wrap gap-2">
             {availableVariants.length > 0 ? (
-              availableVariants.slice(0, 4).map((variant: any) => (
+              availableVariants.slice(0, 5).map((variant: any) => (
                 <button 
                   key={variant.id}
                   onClick={(e) => handleQuickAdd(e, variant.size)}
-                  className="w-8 h-8 flex items-center justify-center border border-[#333333] text-xs hover:bg-[#333333] hover:text-white transition-colors"
+                  className="px-3 py-1.5 flex items-center justify-center border border-gray-300 rounded-full text-[10px] uppercase tracking-wider text-gray-600 hover:border-[#333333] hover:bg-[#333333] hover:text-white transition-all duration-300"
                 >
                   {variant.size}
                 </button>
               ))
             ) : (
-              <span className="text-xs text-red-500 font-bold uppercase tracking-widest">Esgotado</span>
+              <span className="text-xs text-red-500 font-bold uppercase tracking-widest text-center w-full">Esgotado</span>
             )}
           </div>
         </div>

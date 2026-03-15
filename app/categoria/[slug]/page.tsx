@@ -3,21 +3,24 @@ import ProductCard from '../../../components/product/ProductCard';
 import { getProducts } from '../../../lib/nuvemshop';
 
 export default async function CategoryPage({ params }: { params: { slug: string } }) {
-  const categorySlug = params.slug || 'todos';
+  // 1. TRUQUE DO NEXT.JS 15: Aguarda a leitura correta da URL
+  const resolvedParams = await Promise.resolve(params);
+  
+  // 2. Agora sim ele pega o 'biquinis', 'vestidos', etc.
+  const categorySlug = resolvedParams.slug || 'todos';
   const categoryTitle = categorySlug.replace(/-/g, ' ');
 
-  // 1. Puxa TODOS os produtos da loja de uma vez
+  // 3. Puxa TODOS os produtos da loja
   const allProducts = await getProducts();
 
-  // 2. Filtra os produtos localmente com precisão cirúrgica
+  // 4. Filtra com precisão
   const realProducts = categorySlug === 'todos' 
     ? allProducts 
     : allProducts.filter((product: any) => {
         // Verifica se a categoria clicada está na lista de categorias do produto
         const hasCategory = product.categories.includes(categorySlug);
         
-        // Plano B: Se a cliente esqueceu de marcar a categoria na Nuvemshop, 
-        // mas escreveu "Vestido" no nome da peça, ele acha também!
+        // Plano B: Se esquecer de marcar na Nuvemshop, tenta achar pelo nome
         const hasName = product.name.toLowerCase().includes(categoryTitle.toLowerCase());
         
         return hasCategory || hasName;
@@ -44,14 +47,14 @@ export default async function CategoryPage({ params }: { params: { slug: string 
           <div className="border-b border-gray-100 pb-6">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-[#333333] mb-4">Categorias</h3>
             <div className="flex flex-col gap-3">
-              <Link href="/categoria/todos" className={`text-sm hover:text-[#FADADD] ${categorySlug === 'todos' ? 'font-bold text-[#FADADD]' : 'text-gray-600'}`}>Ver Todos</Link>
-              <Link href="/categoria/biquinis" className={`text-sm hover:text-[#FADADD] ${categorySlug === 'biquinis' ? 'font-bold text-[#FADADD]' : 'text-gray-600'}`}>Biquínis</Link>
-              <Link href="/categoria/vestidos" className={`text-sm hover:text-[#FADADD] ${categorySlug === 'vestidos' ? 'font-bold text-[#FADADD]' : 'text-gray-600'}`}>Vestidos</Link>
-              <Link href="/categoria/tops-e-croppeds" className={`text-sm hover:text-[#FADADD] ${categorySlug === 'tops-e-croppeds' ? 'font-bold text-[#FADADD]' : 'text-gray-600'}`}>Top's e Cropped's</Link>
-              <Link href="/categoria/shorts-jeans" className={`text-sm hover:text-[#FADADD] ${categorySlug === 'shorts-jeans' ? 'font-bold text-[#FADADD]' : 'text-gray-600'}`}>Shorts Jeans</Link>
-              <Link href="/categoria/conjuntos" className={`text-sm hover:text-[#FADADD] ${categorySlug === 'conjuntos' ? 'font-bold text-[#FADADD]' : 'text-gray-600'}`}>Conjuntos</Link>
-              <Link href="/categoria/bodys" className={`text-sm hover:text-[#FADADD] ${categorySlug === 'bodys' ? 'font-bold text-[#FADADD]' : 'text-gray-600'}`}>Body's</Link>
-              <Link href="/categoria/sapatos" className={`text-sm hover:text-[#FADADD] ${categorySlug === 'sapatos' ? 'font-bold text-[#FADADD]' : 'text-gray-600'}`}>Sapatos</Link>
+              <Link href="/categoria/todos" className={`text-sm ${categorySlug === 'todos' ? 'font-bold text-[#FADADD]' : 'text-gray-600 hover:text-[#FADADD]'}`}>Ver Todos</Link>
+              <Link href="/categoria/biquinis" className={`text-sm ${categorySlug === 'biquinis' ? 'font-bold text-[#FADADD]' : 'text-gray-600 hover:text-[#FADADD]'}`}>Biquínis</Link>
+              <Link href="/categoria/vestidos" className={`text-sm ${categorySlug === 'vestidos' ? 'font-bold text-[#FADADD]' : 'text-gray-600 hover:text-[#FADADD]'}`}>Vestidos</Link>
+              <Link href="/categoria/tops-e-croppeds" className={`text-sm ${categorySlug === 'tops-e-croppeds' ? 'font-bold text-[#FADADD]' : 'text-gray-600 hover:text-[#FADADD]'}`}>Top's e Cropped's</Link>
+              <Link href="/categoria/shorts-jeans" className={`text-sm ${categorySlug === 'shorts-jeans' ? 'font-bold text-[#FADADD]' : 'text-gray-600 hover:text-[#FADADD]'}`}>Shorts Jeans</Link>
+              <Link href="/categoria/conjuntos" className={`text-sm ${categorySlug === 'conjuntos' ? 'font-bold text-[#FADADD]' : 'text-gray-600 hover:text-[#FADADD]'}`}>Conjuntos</Link>
+              <Link href="/categoria/bodys" className={`text-sm ${categorySlug === 'bodys' ? 'font-bold text-[#FADADD]' : 'text-gray-600 hover:text-[#FADADD]'}`}>Body's</Link>
+              <Link href="/categoria/sapatos" className={`text-sm ${categorySlug === 'sapatos' ? 'font-bold text-[#FADADD]' : 'text-gray-600 hover:text-[#FADADD]'}`}>Sapatos</Link>
             </div>
           </div>
         </aside>
