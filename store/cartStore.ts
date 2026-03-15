@@ -1,63 +1,72 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
+// 1. Atualizamos a interface para exigir o ID real e a quantidade
 export interface CartItem {
-  id: string;
-  productId: number;
+  id: number | string; // Aceita o ID numérico da Nuvemshop
   name: string;
   price: number;
-  size: string;
   image: string;
+  size: string;
   quantity: number;
 }
 
 interface CartStore {
-  // Estado do Carrinho
   items: CartItem[];
   isCartOpen: boolean;
-  addItem: (item: Omit<CartItem, 'quantity' | 'id'>) => void;
-  removeItem: (id: string) => void;
+  isMenuOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
-  
-  // Estado do Menu Mobile
-  isMenuOpen: boolean;
   openMenu: () => void;
   closeMenu: () => void;
+  addItem: (item: CartItem) => void; // 2. Agora o addItem exige o item completo
+  removeItem: (id: number | string) => void;
+  clearCart: () => void;
 }
 
-export const useCartStore = create<CartStore>((set) => ({
-  // Implementação do Carrinho
-  items: [],
-  isCartOpen: false, // Renomeado de isOpen para isCartOpen
-  
-  addItem: (newItem) => set((state) => {
-    const uniqueId = `${newItem.productId}-${newItem.size}`;
-    const existingItem = state.items.find(item => item.id === uniqueId);
-    
-    if (existingItem) {
-      return {
-        items: state.items.map(item => 
-          item.id === uniqueId ? { ...item, quantity: item.quantity + 1 } : item
-        ),
-        isCartOpen: true
-      };
-    }
-    
-    return { 
-      items: [...state.items, { ...newItem, id: uniqueId, quantity: 1 }],
-      isCartOpen: true 
-    };
-  }),
-  
-  removeItem: (id) => set((state) => ({
-    items: state.items.filter(item => item.id !== id)
-  })),
-  
-  openCart: () => set({ isCartOpen: true, isMenuOpen: false }), // Fecha o menu se abrir o carrinho
-  closeCart: () => set({ isCartOpen: false }),
+export const useCartStore = create<CartStore>()(
+  persist(
+    (set) => ({
+      items: [],
+      isCartOpen: false,
+      isMenuOpen: false,
+      
+      openCart: () => set({ isCartOpen: true }),
+      closeCart: () => set({ isCartOpen: false }),
+      openMenu: () => set({ isMenuOpen: true }),
+      closeMenu: () => set({ isMenuOpen: false }),
+      
+      addItem: (newItem) =>
+        set((state) => {
+          // Verifica se já existe um item com o mesmo ID E mesmo tamanho no carrinho
+          const existingItem = state.items.find(
+            (item) => item.id === newItem.id && item.size === newItem.size
+          );
 
-  // Implementação do Menu Mobile
-  isMenuOpen: false,
-  openMenu: () => set({ isMenuOpen: true, isCartOpen: false }), // Fecha o carrinho se abrir o menu
-  closeMenu: () => set({ isMenuOpen: false }),
-}));
+          if (existingItem) {
+            // Se existir, apenas soma a quantidade
+            return {
+              items: state.items.map((item) =>
+                item.id === newItem.id && item.size === newItem.size
+                  ? { ...item, quantity: item.quantity + newItem.quantity }
+                  : item
+              ),
+            };
+          }
+          
+          // Se não existir, adiciona o novo item à lista
+          return { items: [...state.items, newItem] };
+        }),
+        
+      removeItem: (id) =>
+        set((state) => ({
+          items: state.items.filter((item) => item.id !== id),
+        })),
+        
+      clearCart: () => set({ items: [] }),
+    }),
+    {
+      name: 'luz-de-maria-cart', // Nome que fica salvo no LocalStorage do navegador
+    }
+  )
+);
