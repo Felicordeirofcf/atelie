@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image'; // Importado para performance
+import Image from 'next/image';
 import { useCartStore } from '../../store/cartStore';
 
 export default function Header() {
@@ -25,27 +25,26 @@ export default function Header() {
             <span className="block w-6 h-0.5 bg-[#333333]"></span>
           </button>
 
-          {/* Links Navegação (Desktop) */}
+          {/* Links Navegação (Desktop) - Atualizados com as novas categorias */}
           <nav className="hidden md:flex gap-6 text-xs uppercase tracking-wider">
-            <Link href="/categoria/novidades" className="hover:text-[#FADADD] transition-colors">Novidades</Link>
-            <Link href="/categoria/roupas" className="hover:text-[#FADADD] transition-colors">Roupas</Link>
-            <Link href="/categoria/acessorios" className="hover:text-[#FADADD] transition-colors">Acessórios</Link>
-            <Link href="/categoria/sale" className="hover:text-[#FADADD] transition-colors text-red-500 font-medium">Sale</Link>
+            <Link href="/categoria/todos" className="hover:text-[#FADADD] transition-colors">Ver Todos</Link>
+            <Link href="/categoria/biquinis" className="hover:text-[#FADADD] transition-colors">Biquínis</Link>
+            <Link href="/categoria/vestidos" className="hover:text-[#FADADD] transition-colors">Vestidos</Link>
+            <Link href="/categoria/conjuntos" className="hover:text-[#FADADD] transition-colors">Conjuntos</Link>
           </nav>
         </div>
 
-        {/* Centro: Logo Experimental */}
+        {/* Centro: Logo */}
         <div className="flex-1 flex justify-center">
           <Link href="/">
-            <div className="cursor-pointer">
-              {/* Logo Experimental - Usando Image do Next.js */}
+            <div className="cursor-pointer flex items-center justify-center">
               <Image 
                 src="/logo.png" 
                 alt="Ateliê Luz de Maria Logo" 
-                width={150} // Ajustado para ser delicado
-                height={50} // Proporcional
-                className="object-contain h-10 w-auto" // Controlando altura via Tailwind
-                priority // Carrega primeiro para performance
+                width={150} 
+                height={50} 
+                className="object-contain h-10 w-auto" 
+                priority 
               />
             </div>
           </Link>
@@ -58,7 +57,7 @@ export default function Header() {
             className="text-xs md:text-sm uppercase font-semibold flex items-center gap-2 hover:text-[#FADADD] transition-colors"
           >
             <span className="hidden md:block text-xs uppercase tracking-wide">Carrinho</span>
-            {/* Ícone de Sacola simples */}
+            {/* Ícone de Sacola */}
             <div className="relative">
               <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -71,7 +70,8 @@ export default function Header() {
             </div>
           </button>
         </div>
-      </header>  
+      </header>
+
       {/* --- MENU MOBILE GAVETA (Sidebar Esquerda) --- */}
       {/* Fundo escuro */}
       {isMenuOpen && (
@@ -81,39 +81,61 @@ export default function Header() {
         />
       )}
 
-      {/* Gaveta do Menu */}
+      {/* Gaveta do Menu - Estilo exato da Nuvemshop */}
       <div 
-        className={`fixed top-0 left-0 h-full w-[80%] max-w-[300px] bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col md:hidden ${
+        className={`fixed top-0 left-0 h-full w-[85%] max-w-[350px] bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col md:hidden ${
           isMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-[#FADADD]/20">
-          <h2 className="text-sm font-serif uppercase tracking-widest text-[#333333]">Menu</h2>
-          <button onClick={closeMenu} className="text-gray-500 hover:text-black text-2xl leading-none">&times;</button>
+        {/* Cabeçalho do Menu com a setinha de voltar */}
+        <div className="p-4 flex items-center border-b border-gray-100/50">
+          <button onClick={closeMenu} className="text-gray-500 hover:text-black">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <h2 className="text-[15px] font-medium text-center flex-1 pr-5 text-[#333333]">Produtos</h2>
         </div>
 
-        <nav className="flex flex-col p-4 gap-6 mt-4 overflow-y-auto">
-          {/* Links Principais com rotas reais */}
-          <Link href="/categoria/novidades" onClick={closeMenu} className="text-base uppercase tracking-wider font-medium text-[#333333] border-b border-gray-50 pb-2">Novidades</Link>
-          <Link href="/categoria/roupas" onClick={closeMenu} className="text-base uppercase tracking-wider font-medium text-[#333333] border-b border-gray-50 pb-2">Roupas</Link>
-          <Link href="/categoria/acessorios" onClick={closeMenu} className="text-base uppercase tracking-wider font-medium text-[#333333] border-b border-gray-50 pb-2">Acessórios</Link>
-          <Link href="/categoria/sale" onClick={closeMenu} className="text-base uppercase tracking-wider font-medium text-red-500 border-b border-gray-50 pb-2">Sale</Link>
-          
-          {/* Seção Institucional */}
-          <div className="mt-8 flex flex-col gap-4">
-            <Link href="/quem-somos" onClick={closeMenu} className="text-sm text-gray-500">Quem Somos</Link>
-            <Link href="/contato" onClick={closeMenu} className="text-sm text-gray-500">Atendimento</Link>
-            <Link href="/politica-de-privacidade" onClick={closeMenu} className="text-sm text-gray-500">Política de Privacidade</Link>
-            
-            {/* Contato Rápido */}
-            <a href="https://wa.me/5521999999999" className="mt-4 flex items-center gap-2 text-sm text-[#333333] font-semibold bg-green-50 px-4 py-3 rounded-md">
-              <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-              </svg>
-              Suporte via WhatsApp
-            </a>
-          </div>
+        {/* Lista de Categorias limpa (sem bordas, igual ao print) */}
+        <nav className="flex-1 flex flex-col pt-2 overflow-y-auto text-[15px] text-[#333333]">
+          <Link href="/categoria/todos" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            Ver todos os produtos
+          </Link>
+          <Link href="/categoria/biquinis" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            Biquínis
+          </Link>
+          <Link href="/categoria/vestidos" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            Vestidos
+          </Link>
+          <Link href="/categoria/tops-e-croppeds" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            Top's e Cropped's
+          </Link>
+          <Link href="/categoria/shorts-jeans" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            Shorts Jeans
+          </Link>
+          <Link href="/categoria/conjuntos" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            Conjuntos
+          </Link>
+          <Link href="/categoria/bodys" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            Body's
+          </Link>
+          <Link href="/categoria/sapatos" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            Sapatos
+          </Link>
         </nav>
+
+        {/* Rodapé de Usuário (Igual ao print) */}
+        <div className="p-5 border-t border-gray-100 flex items-center gap-3 text-[14px] text-[#333333]">
+          <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+          <div>
+            <Link href="/minha-conta" onClick={closeMenu} className="hover:underline">Iniciar sessão</Link>
+            <span className="mx-1">.</span>
+            <Link href="/cadastro" onClick={closeMenu} className="hover:underline">Criar uma conta</Link>
+          </div>
+        </div>
       </div>
     </>
   );
