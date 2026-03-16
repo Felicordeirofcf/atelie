@@ -23,8 +23,8 @@ export default function ContactPage() {
 
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-widest text-[#333333] mb-4">WhatsApp</h3>
-            <a href="https://wa.me/5521999999999" className="text-[#333333] font-bold text-lg hover:text-[#FADADD] transition-colors">
-              (21) 99999-9999
+            <a href="https://wa.me/5521986721761" className="text-[#333333] font-bold text-lg hover:text-[#FADADD] transition-colors">
+              (21) 98672-1761
             </a>
           </div>
 

@@ -29,8 +29,8 @@ export default function Footer() {
           {/* Entre em contato */}
           <div className="flex flex-col gap-3">
             <h3 className="font-semibold text-base mb-2">Entre em contato</h3>
-            <a href="https://wa.me/5521999999999" className="text-sm text-gray-500 hover:text-[#FADADD] transition-colors">
-              5521999999999 {/* Altere para o número real */}
+            <a href="https://wa.me/5521986721761" className="text-sm text-gray-500 hover:text-[#FADADD] transition-colors">
+              552198672-1761 {/* Altere para o número real */}
             </a>
             <a href="mailto:contato@atelieluzdemaria.com.br" className="text-sm text-gray-500 hover:text-[#FADADD] transition-colors">
               contato@atelieluzdemaria.com.br
