@@ -17,7 +17,6 @@ const atelieBanners = [
     ctaText: 'Ver Coleção',
     desktopPosition: 'object-[50%_35%]',
     mobilePosition: 'object-[55%_35%]',
-    contentPosition: 'items-center justify-end text-center',
   },
   {
     id: 2,
@@ -28,7 +27,6 @@ const atelieBanners = [
     ctaText: 'Aproveitar Descontos',
     desktopPosition: 'object-[50%_05%]',
     mobilePosition: 'object-[55%_35%]',
-    contentPosition: 'items-center justify-end text-center',
   },
   {
     id: 3,
@@ -39,7 +37,6 @@ const atelieBanners = [
     ctaText: 'Ver Lançamentos',
     desktopPosition: 'object-[50%_05%]',
     mobilePosition: 'object-[60%_40%]',
-    contentPosition: 'items-center justify-end text-center',
   },
   {
     id: 4,
@@ -50,7 +47,6 @@ const atelieBanners = [
     ctaText: 'Comprar Favoritos',
     desktopPosition: 'object-[68%_5%]',
     mobilePosition: 'object-[72%_35%]',
-    contentPosition: 'items-center justify-end text-center',
   },
 ];
 
@@ -97,12 +93,10 @@ export default function HeroCarousel() {
 
               <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/35 via-black/10 to-transparent" />
 
-              <div
-                className={`absolute inset-0 z-20 flex px-4 pb-10 md:px-10 md:pb-14 ${banner.contentPosition}`}
-              >
+              <div className="absolute inset-0 z-20 flex items-end justify-end px-4 pb-16 md:px-10 md:pb-14">
                 <Link
                   href={banner.link}
-                  className="rounded-sm bg-white px-6 py-3 text-xs font-bold uppercase tracking-[0.22em] text-[#333333] shadow-xl transition-all hover:bg-[#FADADD] md:px-8 md:py-3.5 md:text-sm"
+                  className="rounded-md bg-white/95 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#333333] shadow-xl transition-all hover:bg-[#FADADD] md:rounded-sm md:px-8 md:py-3.5 md:text-sm md:tracking-[0.22em]"
                 >
                   {banner.ctaText}
                 </Link>
