@@ -12,6 +12,37 @@ export default function CheckoutPage() {
   const frete = subtotal > 500 ? 0 : 25.00; // Exemplo de regra de frete
   const total = subtotal + frete;
 
+  // A loja oficial da sua cliente
+  const storeUrl = "https://atelieluzdemaria4.lojavirtualnuvem.com.br";
+
+  // A função do Formulário Fantasma
+  const submitNuvemshopForm = (variantId: number, quantity: number) => {
+    // Cria o formulário invisível
+    const form = document.createElement('form');
+    form.method = 'POST';
+    // Manda direto para a rota de carrinho da Nuvemshop
+    form.action = `${storeUrl}/comprar/`; 
+    form.style.display = 'none';
+
+    // Cria o input com o ID da Variante (obrigatório)
+    const variantInput = document.createElement('input');
+    variantInput.type = 'hidden';
+    variantInput.name = 'add_to_cart';
+    variantInput.value = variantId.toString();
+    form.appendChild(variantInput);
+
+    // Cria o input com a Quantidade (opcional, mas recomendado)
+    const quantityInput = document.createElement('input');
+    quantityInput.type = 'hidden';
+    quantityInput.name = 'quantity';
+    quantityInput.value = quantity.toString();
+    form.appendChild(quantityInput);
+
+    // Coloca na tela, envia e some
+    document.body.appendChild(form);
+    form.submit();
+  };
+
   const handleIrParaPagamento = async () => {
     if (items.length === 0) {
       alert("Seu carrinho está vazio!");
@@ -21,32 +52,20 @@ export default function CheckoutPage() {
     setIsLoading(true);
 
     try {
-      // 1. Formata os itens para a Nuvemshop
-      const checkoutItems = items.map(item => ({
-        variant_id: Number(item.id),
-        quantity: item.quantity
-      }));
-
-      // 2. Chama a nossa API de Checkout
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: checkoutItems })
-      });
-
-      const data = await response.json();
-
-      // 3. Se a API retornou o link, redireciona a cliente!
-      if (data && data.checkoutUrl) {
-        window.location.assign(data.checkoutUrl);
-      } else {
-        // Se a Nuvemshop barrar (ex: sem estoque), exibe o erro exato
-        alert(data.error || 'Erro ao gerar o link de pagamento. Tente novamente.');
-        setIsLoading(false);
-      }
+      // Como estamos no plano grátis e usando o permalink, 
+      // pegamos o primeiro item (ou o item principal) do carrinho
+      const firstItem = items[0];
+      
+      // Aqui está o pulo do gato: nós garantimos que estamos mandando o ID da VARIANTE
+      const variantId = Number(firstItem.id); 
+      
+      // Dispara o formulário fantasma para a Nuvemshop
+      submitNuvemshopForm(variantId, firstItem.quantity);
+      
+      // Não precisamos colocar setIsLoading(false) aqui porque a página vai redirecionar e morrer
       
     } catch (error) {
-      alert('Erro de conexão. Verifique sua internet e tente novamente.');
+      alert('Erro ao processar o checkout. Tente novamente.');
       setIsLoading(false);
     }
   };
@@ -116,7 +135,6 @@ export default function CheckoutPage() {
                 Você será redirecionado para o ambiente seguro da Nuvemshop para realizar o pagamento via Pix ou Cartão.
               </div>
 
-              {/* Botão com a inteligência injetada */}
               <button 
                 onClick={handleIrParaPagamento}
                 disabled={isLoading}
