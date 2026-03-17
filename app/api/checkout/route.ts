@@ -9,12 +9,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Carrinho vazio' }, { status: 400 });
     }
 
-    // Como o Plano Grátis bloqueia a API de rascunhos, usamos o "Permalink"
-    // Pegamos o ID da primeira variante do carrinho
-    const firstItem = items[0];
-    const storeUrl = "https://atelie-luz-de-maria.nuvemshop.com.br"; // URL da loja da cliente
+    // URL oficial da loja da sua cliente (sem a barra / no final)
+    const storeUrl = "https://atelieluzdemaria4.lojavirtualnuvem.com.br"; 
 
-    // Esse link adiciona o produto e abre o carrinho/checkout automaticamente
+    // Pega o ID do primeiro produto que está no carrinho
+    const firstItem = items[0];
+
+    // Monta o Link Direto de Checkout (Permalink) da Nuvemshop
     const checkoutUrl = `${storeUrl}/cart/add/${firstItem.variant_id}`;
 
     return NextResponse.json({ checkoutUrl });
