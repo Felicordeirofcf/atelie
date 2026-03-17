@@ -1,87 +1,116 @@
 'use client';
 
+import Link from 'next/link';
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
-import Link from 'next/link';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 const atelieBanners = [
   {
     id: 1,
-    title: "Coleção de Inverno",
-    imgDesktop: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1920&h=800",
-    imgMobile: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800&h=1000",
-    link: "/categoria/inverno",
-    ctaText: "Ver Coleção"
+    title: 'Coleção de Inverno',
+    imgDesktop: '/banners/banner-1-desktop.jpg',
+    imgMobile: '/banners/banner-1-mobile.jpg',
+    link: '/categoria/inverno',
+    ctaText: 'Ver Coleção',
+    desktopPosition: 'object-[50%_35%]',
+    mobilePosition: 'object-[55%_35%]',
+    contentPosition: 'items-center justify-end text-center',
   },
   {
     id: 2,
-    title: "Saldão Especial",
-    imgDesktop: "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=1920&h=800",
-    imgMobile: "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=800&h=1000",
-    link: "/promocoes",
-    ctaText: "Aproveitar Descontos"
+    title: 'Saldão Especial',
+    imgDesktop: '/banners/banner-2-desktop.jpg',
+    imgMobile: '/banners/banner-2-mobile.jpg',
+    link: '/promocoes',
+    ctaText: 'Aproveitar Descontos',
+    desktopPosition: 'object-[50%_05%]',
+    mobilePosition: 'object-[55%_35%]',
+    contentPosition: 'items-center justify-end text-center',
   },
   {
     id: 3,
-    title: "Novidades da Semana",
-    imgDesktop: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=80&w=1920&h=800",
-    imgMobile: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=80&w=800&h=1000",
-    link: "/novidades",
-    ctaText: "Ver Lançamentos"
+    title: 'Novidades da Semana',
+    imgDesktop: '/banners/banner-3-desktop.jpg',
+    imgMobile: '/banners/banner-3-mobile.jpg',
+    link: '/novidades',
+    ctaText: 'Ver Lançamentos',
+    desktopPosition: 'object-[50%_05%]',
+    mobilePosition: 'object-[60%_40%]',
+    contentPosition: 'items-center justify-end text-center',
   },
   {
     id: 4,
-    title: "Mais Vendidos",
-    imgDesktop: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=1920&h=800",
-    imgMobile: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800&h=1000",
-    link: "/top-sellers",
-    ctaText: "Comprar Favoritos"
-  }
+    title: 'Mais Vendidos',
+    imgDesktop: '/banners/banner-4-desktop.jpg',
+    imgMobile: '/banners/banner-4-mobile.jpg',
+    link: '/top-sellers',
+    ctaText: 'Comprar Favoritos',
+    desktopPosition: 'object-[68%_5%]',
+    mobilePosition: 'object-[72%_35%]',
+    contentPosition: 'items-center justify-end text-center',
+  },
 ];
 
 export default function HeroCarousel() {
   return (
-    <div className="w-full relative">
+    <section className="relative w-full overflow-hidden bg-[#f7f4ef]">
       <Swiper
         modules={[Autoplay, Pagination]}
-        spaceBetween={0}
         slidesPerView={1}
-        loop={true}
+        loop
         autoplay={{ delay: 6000, disableOnInteraction: false }}
-        pagination={{ clickable: true, bulletActiveClass: 'swiper-pagination-bullet-active !bg-[#FADADD]' }}
-        // ALTURA AJUSTADA AQUI: 55vh para celular, 65vh para computador
-        className="w-full h-[55vh] md:h-[65vh]"
+        pagination={{
+          clickable: true,
+          bulletActiveClass: 'swiper-pagination-bullet-active !bg-[#FADADD]',
+        }}
+        className="h-[52vh] w-full md:h-[72vh]"
       >
         {atelieBanners.map((banner) => (
           <SwiperSlide key={banner.id}>
-            <div className="relative w-full h-full flex items-center justify-center">
-              
-              {/* Degradê escuro apenas na parte inferior para a leitura do texto */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10" />
-              
-              <img src={banner.imgDesktop} alt={banner.title} className="hidden md:block w-full h-full object-cover relative z-0" />
-              <img src={banner.imgMobile} alt={banner.title} className="block md:hidden w-full h-full object-cover relative z-0 object-top" />
-              
-              <div className="absolute inset-0 flex flex-col items-center justify-end pb-12 md:pb-16 z-20 px-4 text-center">
-                
-                {/* Título agora aparece no celular também, mas com fonte menor */}
-                <h2 className="text-white text-2xl md:text-5xl font-serif mb-4 md:mb-6 drop-shadow-lg">
-                  {banner.title}
-                </h2>
-                
-                <Link href={banner.link}>
-                  {/* Botão com padding ajustado para celular */}
-                  <button className="px-6 py-2.5 md:px-8 md:py-3 bg-white text-[#333333] font-bold uppercase tracking-widest text-xs md:text-sm transition-all hover:bg-[#FADADD] hover:text-[#333333] rounded-sm shadow-xl">
-                    {banner.ctaText}
-                  </button>
+            <div className="relative h-full w-full overflow-hidden">
+              <div className="absolute inset-0 hidden md:block">
+                <Image
+                  src={banner.imgDesktop}
+                  alt={banner.title}
+                  fill
+                  priority={banner.id === 1}
+                  quality={100}
+                  sizes="100vw"
+                  className={`object-cover ${banner.desktopPosition}`}
+                />
+              </div>
+
+              <div className="absolute inset-0 block md:hidden">
+                <Image
+                  src={banner.imgMobile}
+                  alt={banner.title}
+                  fill
+                  priority={banner.id === 1}
+                  quality={100}
+                  sizes="100vw"
+                  className={`object-cover ${banner.mobilePosition}`}
+                />
+              </div>
+
+              <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/35 via-black/10 to-transparent" />
+
+              <div
+                className={`absolute inset-0 z-20 flex px-4 pb-10 md:px-10 md:pb-14 ${banner.contentPosition}`}
+              >
+                <Link
+                  href={banner.link}
+                  className="rounded-sm bg-white px-6 py-3 text-xs font-bold uppercase tracking-[0.22em] text-[#333333] shadow-xl transition-all hover:bg-[#FADADD] md:px-8 md:py-3.5 md:text-sm"
+                >
+                  {banner.ctaText}
                 </Link>
               </div>
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </section>
   );
 }
