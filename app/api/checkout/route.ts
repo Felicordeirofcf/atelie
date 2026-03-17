@@ -9,13 +9,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Carrinho vazio' }, { status: 400 });
     }
 
-    // URL oficial da loja da sua cliente (sem a barra / no final)
+    // URL oficial da loja
     const storeUrl = "https://atelieluzdemaria4.lojavirtualnuvem.com.br"; 
 
-    // Pega o ID do primeiro produto que está no carrinho
+    // Pega o ID da variante do primeiro item do carrinho
     const firstItem = items[0];
 
-    // Monta o Link Direto de Checkout (Permalink) da Nuvemshop
+    // Monta o link que pula as travas da API
     const checkoutUrl = `${storeUrl}/cart/add/${firstItem.variant_id}`;
 
     return NextResponse.json({ checkoutUrl });
