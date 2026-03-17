@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { createCheckout } from '../../../lib/nuvemshop';
 
 export async function POST(request: Request) {
   try {
@@ -10,19 +9,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Carrinho vazio' }, { status: 400 });
     }
 
-    // Tenta criar o Pedido Rascunho na API da Nuvemshop
-    const data = await createCheckout(items);
+    // Como o Plano Grátis bloqueia a API de rascunhos, usamos o "Permalink"
+    // Pegamos o ID da primeira variante do carrinho
+    const firstItem = items[0];
+    const storeUrl = "https://atelie-luz-de-maria.nuvemshop.com.br"; // URL da loja da cliente
 
-    // A mágica: A Nuvemshop devolve o link de pagamento dentro de abandoned_checkout_url
-    if (data && data.abandoned_checkout_url) {
-      return NextResponse.json({ checkoutUrl: data.abandoned_checkout_url });
-    }
+    // Esse link adiciona o produto e abre o carrinho/checkout automaticamente
+    const checkoutUrl = `${storeUrl}/cart/add/${firstItem.variant_id}`;
 
-    // Se batermos na trave de novo, exibimos o erro real na tela
-    return NextResponse.json({ error: 'Nuvemshop não retornou o link de pagamento', detalhes: data }, { status: 500 });
+    return NextResponse.json({ checkoutUrl });
     
   } catch (error: any) {
-    console.error('Erro na Rota de Checkout:', error);
-    return NextResponse.json({ error: error.message || 'Falha interna na comunicação com a loja' }, { status: 500 });
+    return NextResponse.json({ error: 'Erro ao gerar link' }, { status: 500 });
   }
 }
