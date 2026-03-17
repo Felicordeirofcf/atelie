@@ -19,7 +19,6 @@ async function fetchNuvemshop(endpoint: string, options: RequestInit = {}) {
     ...options.headers,
   };
 
-  // Mantemos o cache: 'no-store' para testes.
   const response = await fetch(url, { ...options, headers, cache: 'no-store' });
 
   if (!response.ok) {
@@ -30,21 +29,17 @@ async function fetchNuvemshop(endpoint: string, options: RequestInit = {}) {
   return response.json();
 }
 
-// 1. Buscar Produtos (Blindado, Categorias e Handle Limpo)
+// 1. Buscar Produtos
 export async function getProducts(q?: string) {
   const endpoint = q ? `/products?q=${q}` : '/products';
   const data = await fetchNuvemshop(endpoint);
   
-  // Blinda contra erros: Se a resposta não for um array de produtos, retorna vazio
   if (!data || !Array.isArray(data)) {
     console.warn("Nenhum produto encontrado ou resposta inválida da API.");
     return []; 
   }
 
-  // Formatamos os dados confusos da Nuvemshop para um formato simples pro nosso site
   return data.map((product: any) => {
-    
-    // BLINDAGEM DO LINK: Garante que vamos pegar o texto puro do handle
     let safeHandle = String(product.id);
     if (product.handle) {
       if (typeof product.handle === 'string') safeHandle = product.handle;
@@ -58,11 +53,8 @@ export async function getProducts(q?: string) {
       price: parseFloat(product.variants?.[0]?.price || '0'),
       originalPrice: product.variants?.[0]?.promotional_price ? parseFloat(product.variants[0].compare_at_price || '0') : null,
       image: product.images?.[0]?.src || 'https://via.placeholder.com/800x1000?text=Sem+Foto',
-      handle: safeHandle.toLowerCase().trim(), // Handle 100% limpo
-      
-      // Categorias (slugs) exatas da Nuvemshop para o filtro funcionar
+      handle: safeHandle.toLowerCase().trim(),
       categories: product.categories?.map((c: any) => c.handle?.pt || c.handle || '') || [],
-      
       variants: product.variants?.map((v: any) => ({
         id: v.id,
         size: v.values?.[0]?.pt || v.values?.[0] || 'U',
@@ -72,7 +64,7 @@ export async function getProducts(q?: string) {
   });
 }
 
-// 2. Criar Checkout (Versão Corrigida - Sem esconder erro)
+// 2. Criar Checkout (Versão Corrigida: Lança erro em vez de redirecionar errado)
 export async function createCheckout(items: { variant_id: number; quantity: number }[]) {
   const data = await fetchNuvemshop('/checkouts', {
     method: 'POST',
@@ -81,10 +73,9 @@ export async function createCheckout(items: { variant_id: number; quantity: numb
     })
   });
   
-  // Se a Nuvemshop recusar ou não existir esse endpoint, a gente TRAVA e avisa, 
-  // em vez de redirecionar para a mesma página em loop!
+  // A MUDANÇA ESTÁ AQUI: Se falhar, ele avisa o sistema e faz o botão mostrar o alerta
   if (!data) {
-    throw new Error("A API da Nuvemshop recusou a criação do checkout.");
+    throw new Error("A API da Nuvemshop recusou a criação do checkout. Verifique as credenciais ou se os produtos têm estoque.");
   }
 
   return data; 

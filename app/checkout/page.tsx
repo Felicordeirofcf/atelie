@@ -1,13 +1,55 @@
 'use client';
 
+import { useState } from 'react';
 import { useCartStore } from '../../store/cartStore';
 import Link from 'next/link';
 
 export default function CheckoutPage() {
   const { items, removeItem } = useCartStore();
+  const [isLoading, setIsLoading] = useState(false);
+
   const subtotal = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const frete = subtotal > 500 ? 0 : 25.00; // Exemplo de regra de frete
   const total = subtotal + frete;
+
+  const handleIrParaPagamento = async () => {
+    if (items.length === 0) {
+      alert("Seu carrinho está vazio!");
+      return;
+    }
+    
+    setIsLoading(true);
+
+    try {
+      // 1. Formata os itens para a Nuvemshop
+      const checkoutItems = items.map(item => ({
+        variant_id: Number(item.id),
+        quantity: item.quantity
+      }));
+
+      // 2. Chama a nossa API de Checkout
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: checkoutItems })
+      });
+
+      const data = await response.json();
+
+      // 3. Se a API retornou o link, redireciona a cliente!
+      if (data && data.checkoutUrl) {
+        window.location.assign(data.checkoutUrl);
+      } else {
+        // Se a Nuvemshop barrar (ex: sem estoque), exibe o erro exato
+        alert(data.error || 'Erro ao gerar o link de pagamento. Tente novamente.');
+        setIsLoading(false);
+      }
+      
+    } catch (error) {
+      alert('Erro de conexão. Verifique sua internet e tente novamente.');
+      setIsLoading(false);
+    }
+  };
 
   if (items.length === 0) {
     return (
@@ -74,8 +116,20 @@ export default function CheckoutPage() {
                 Você será redirecionado para o ambiente seguro da Nuvemshop para realizar o pagamento via Pix ou Cartão.
               </div>
 
-              <button className="w-full py-5 bg-[#333333] text-white font-bold uppercase tracking-widest text-sm hover:bg-[#FADADD] hover:text-[#333333] transition-colors shadow-lg">
-                Ir para o Pagamento
+              {/* Botão com a inteligência injetada */}
+              <button 
+                onClick={handleIrParaPagamento}
+                disabled={isLoading}
+                className="w-full py-5 bg-[#333333] text-white font-bold uppercase tracking-widest text-sm hover:bg-[#FADADD] hover:text-[#333333] transition-colors shadow-lg flex justify-center items-center disabled:bg-gray-400 disabled:cursor-not-allowed"
+              >
+                {isLoading ? (
+                  <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                ) : (
+                  'Ir para o Pagamento'
+                )}
               </button>
               
               <Link href="/" className="block text-center mt-6 text-xs text-gray-400 uppercase tracking-widest hover:text-[#333333] underline">
