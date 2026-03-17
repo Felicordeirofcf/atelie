@@ -75,13 +75,13 @@ export async function getProducts(q?: string) {
   }
 }
 
-// 3. Criar Checkout (Agora apenas repassa o erro da função fetchNuvemshop lá em cima)
+// 3. Criar Checkout (Agora usando o Segredo do Pedido Rascunho)
 export async function createCheckout(items: { variant_id: number; quantity: number }[]) {
-  // A função fetchNuvemshop vai tentar criar. Se der erro, ela já vai "gritar" o motivo real.
-  const data = await fetchNuvemshop('/checkouts', {
+  // Trocamos o /checkouts (que não existe) pelo /draft_orders (que existe e nos dá o link)
+  const data = await fetchNuvemshop('/draft_orders', {
     method: 'POST',
     body: JSON.stringify({
-      line_items: items.map(item => ({ variant_id: item.variant_id, quantity: item.quantity }))
+      products: items.map(item => ({ variant_id: item.variant_id, quantity: item.quantity }))
     })
   });
   

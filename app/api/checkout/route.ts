@@ -10,15 +10,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Carrinho vazio' }, { status: 400 });
     }
 
-    // Tenta criar o checkout na API da Nuvemshop
+    // Tenta criar o Pedido Rascunho na API da Nuvemshop
     const data = await createCheckout(items);
 
-    // Se a Nuvemshop devolver o link, redireciona o cliente
-    if (data && (data.checkout_url || data.mobile_checkout_url || data.url)) {
-      const finalUrl = data.checkout_url || data.mobile_checkout_url || data.url;
-      return NextResponse.json({ checkoutUrl: finalUrl });
+    // A mágica: A Nuvemshop devolve o link de pagamento dentro de abandoned_checkout_url
+    if (data && data.abandoned_checkout_url) {
+      return NextResponse.json({ checkoutUrl: data.abandoned_checkout_url });
     }
 
+    // Se batermos na trave de novo, exibimos o erro real na tela
     return NextResponse.json({ error: 'Nuvemshop não retornou o link de pagamento', detalhes: data }, { status: 500 });
     
   } catch (error: any) {
