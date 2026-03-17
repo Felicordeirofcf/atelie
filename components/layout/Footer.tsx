@@ -12,7 +12,7 @@ export default function Footer() {
           {/* Departamentos */}
           <div className="flex flex-col gap-3">
             <h3 className="font-semibold text-base mb-2">Departamentos</h3>
-            <Link href="/quem-somos" className="text-sm text-gray-500 hover:text-[#FADADD] transition-colors">Quem Somos</Link>
+            <Link href="/quem-somos" className="text-sm text-gray-500 hover:text-[#FADADD] transition-colors"></Link>
             <Link href="/rastrear-pedido" className="text-sm text-gray-500 hover:text-[#FADADD] transition-colors">Rastrear Pedido</Link>
             <Link href="/minha-conta" className="text-sm text-gray-500 hover:text-[#FADADD] transition-colors">Minha Conta</Link>
             <Link href="/pedidos" className="text-sm text-gray-500 hover:text-[#FADADD] transition-colors">Pedidos</Link>

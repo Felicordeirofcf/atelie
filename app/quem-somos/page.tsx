@@ -14,7 +14,7 @@ export default function AboutPage() {
         />
         <div className="relative z-20 text-center px-4">
           <h1 className="text-4xl md:text-5xl font-serif uppercase tracking-widest text-white mb-4 drop-shadow-md">
-            Quem Somos
+            
           </h1>
           <div className="w-16 h-0.5 bg-[#FADADD] mx-auto"></div>
         </div>
@@ -25,7 +25,7 @@ export default function AboutPage() {
         <nav className="text-xs text-gray-500 uppercase tracking-wide">
           <Link href="/" className="hover:text-[#FADADD] transition-colors">Home</Link>
           <span className="mx-2">/</span>
-          <span className="text-[#333333] font-semibold">Quem Somos</span>
+          <span className="text-[#333333] font-semibold"></span>
         </nav>
       </div>
 
