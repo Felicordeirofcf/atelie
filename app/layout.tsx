@@ -1,35 +1,40 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from '../components/layout/Header';
 import Minicart from '../components/layout/Minicart';
 import Footer from '../components/layout/Footer';
+import WhatsAppButton from '../components/layout/WhatsAppButton'; // Certifique-se de que o caminho está correto
 
 const inter = Inter({ subsets: ['latin'] });
 
-// Configuração de SEO Completa (Metadata)
+// Nova forma de configurar Viewport e ThemeColor (evita alertas no build)
+export const viewport: Viewport = {
+  themeColor: '#FAF9F6',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
+
+// Configuração de SEO Completa
 export const metadata: Metadata = {
-  // SEO Base
   title: {
     default: 'Ateliê Luz de Maria | Moda Feminina Exclusiva',
     template: '%s | Ateliê Luz de Maria'
   },
   description: 'Descubra a elegância atemporal e a exclusividade do Ateliê Luz de Maria. Curadoria de moda feminina com toque artesanal, tecidos leves e caimento perfeito. Frete Grátis acima de R$500.',
   keywords: ['moda feminina', 'ateliê', 'vestidos', 'blusas', 'exclusivo', 'luz de maria', 'vestuário'],
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-  themeColor: '#FAF9F6', // Cor para o navegador e atalho mobile
-
-  // Open Graph / Facebook (para compartilhamentos no WhatsApp/Insta)
+  
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://atelie-luz-de-maria.vercel.app', // <-- SUBSTITUA PELA SUA URL VERCEL REAL
+    url: 'https://atelie-ebon.vercel.app', 
     siteName: 'Ateliê Luz de Maria',
     title: 'Ateliê Luz de Maria | Curadoria de Moda Feminina Exclusiva',
     description: 'Elegância, conforto e exclusividade em cada costura. Clique e descubra nossa coleção.',
     images: [
       {
-        url: '/logo.png', // Usa a logo que você colocou na pasta public
+        url: '/logo.png',
         width: 1200,
         height: 630,
         alt: 'Logo Ateliê Luz de Maria'
@@ -37,7 +42,6 @@ export const metadata: Metadata = {
     ]
   },
   
-  // Twitter (para compartilhamentos no Twitter)
   twitter: {
     card: 'summary_large_image',
     title: 'Ateliê Luz de Maria | Moda Feminina Exclusiva',
@@ -45,14 +49,12 @@ export const metadata: Metadata = {
     images: ['/logo.png'],
   },
   
-  // Atalhos Mobile e Favicon
   icons: {
     icon: '/logo.png',
-    apple: '/logo.png', // Importante para o "Adicionar à Tela de Início"
+    apple: '/logo.png',
     shortcut: '/logo.png',
   },
   
-  // Robots
   robots: {
     index: true,
     follow: true,
@@ -74,6 +76,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${inter.className} bg-[#FAF9F6] text-[#333333] antialiased`}>
+        {/* Banner de Promoção */}
         <div className="w-full bg-[#FADADD] text-center py-2 text-xs font-medium tracking-widest uppercase text-gray-800">
           Frete Grátis acima de R$ 500 | Cupom: PRIMEIRACOMPRA
         </div>
@@ -85,8 +88,11 @@ export default function RootLayout({
         </main>
 
         <Minicart />
-
+        
         <Footer />
+
+        {/* Botão Flutuante de WhatsApp em todas as páginas */}
+        <WhatsAppButton />
         
       </body>
     </html>
