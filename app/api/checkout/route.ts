@@ -4,29 +4,26 @@ import { createCheckout } from '../../../lib/nuvemshop';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    console.log("Recebido do Carrinho:", body); // Log 1: Vendo se chegou
-
     const { items } = body;
 
     if (!items || items.length === 0) {
       return NextResponse.json({ error: 'Carrinho vazio' }, { status: 400 });
     }
 
-    // Chama o nosso tradutor
-    console.log("Enviando para Nuvemshop..."); // Log 2: Vendo se chamou
+    // Tenta criar o checkout na API da Nuvemshop
     const data = await createCheckout(items);
-    console.log("Resposta da Nuvemshop:", data); // Log 3: Vendo o que voltou
 
-    // A Nuvemshop devolve o link no campo 'checkout_url' ou no formato da API nova (mobile_checkout_url, etc)
     if (data && (data.checkout_url || data.mobile_checkout_url || data.url)) {
       const finalUrl = data.checkout_url || data.mobile_checkout_url || data.url;
       return NextResponse.json({ checkoutUrl: finalUrl });
     }
 
-    return NextResponse.json({ error: 'Link não retornado', detalhes: data }, { status: 500 });
+    // Se a Nuvemshop responder mas não mandar o link, a gente avisa!
+    return NextResponse.json({ error: 'Nuvemshop não retornou o link de pagamento', detalhes: data }, { status: 500 });
     
-  } catch (error) {
-    console.error('Erro na rota POST /api/checkout:', error); // Log 4: Capturando falha na roda
-    return NextResponse.json({ error: 'Falha interna' }, { status: 500 });
+  } catch (error: any) {
+    // AQUI ESTÁ A MÁGICA: Captura o erro da lib e manda pro Frontend exibir o alert
+    console.error('Erro fatal na Rota de Checkout:', error);
+    return NextResponse.json({ error: error.message || 'Falha interna na comunicação com a loja' }, { status: 500 });
   }
 }

@@ -72,7 +72,7 @@ export async function getProducts(q?: string) {
   });
 }
 
-// 2. Criar Checkout
+// 2. Criar Checkout (Versão Corrigida - Sem esconder erro)
 export async function createCheckout(items: { variant_id: number; quantity: number }[]) {
   const data = await fetchNuvemshop('/checkouts', {
     method: 'POST',
@@ -80,5 +80,12 @@ export async function createCheckout(items: { variant_id: number; quantity: numb
       line_items: items.map(item => ({ variant_id: item.variant_id, quantity: item.quantity }))
     })
   });
-  return data || { checkout_url: '/checkout' }; 
+  
+  // Se a Nuvemshop recusar ou não existir esse endpoint, a gente TRAVA e avisa, 
+  // em vez de redirecionar para a mesma página em loop!
+  if (!data) {
+    throw new Error("A API da Nuvemshop recusou a criação do checkout.");
+  }
+
+  return data; 
 }
