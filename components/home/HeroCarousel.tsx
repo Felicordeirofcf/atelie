@@ -1,112 +1,63 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
 
-const atelieBanners = [
-  {
-    id: 1,
-    title: 'Coleção de Inverno',
-    imgDesktop: '/banners/banner-1-desktop.jpg',
-    imgMobile: '/banners/banner-1-mobile.jpg',
-    link: '/categoria/todos',
-    ctaText: 'LOJA', // Atualizado para a vibe da imagem
-    desktopPosition: 'object-[50%_35%]',
-    mobilePosition: 'object-[55%_35%]',
-  },
-  {
-    id: 2,
-    title: 'Saldão Especial',
-    imgDesktop: '/banners/banner-2-desktop.jpg',
-    imgMobile: '/banners/banner-2-mobile.jpg',
-    link: '/categoria/todos',
-    ctaText: 'Descobrir Peças',
-    desktopPosition: 'object-[50%_05%]',
-    mobilePosition: 'object-[55%_35%]',
-  },
-  {
-    id: 3,
-    title: 'Novidades da Semana',
-    imgDesktop: '/banners/banner-3-desktop.jpg',
-    imgMobile: '/banners/banner-3-mobile.jpg',
-    link: '/categoria/todos',
-    ctaText: 'Ver Lançamentos',
-    desktopPosition: 'object-[50%_05%]',
-    mobilePosition: 'object-[60%_40%]',
-  },
-  {
-    id: 4,
-    title: 'Mais Vendidos',
-    imgDesktop: '/banners/banner-4-desktop.jpg',
-    imgMobile: '/banners/banner-4-mobile.jpg',
-    link: '/categoria/todos',
-    ctaText: 'Comprar Favoritos',
-    desktopPosition: 'object-[68%_5%]',
-    mobilePosition: 'object-[72%_35%]',
-  },
-];
+const staticBanner = {
+  title: 'Nova Coleção Crochê Resort',
+  // Como agora ela vai encolher para caber, você pode usar a MESMA foto para o PC e Mobile!
+  imgDesktop: '/banners/banner-croche-mobile.jpg', 
+  imgMobile: '/banners/banner-croche-mobile.jpg',   
+  link: '/categoria/todos',
+  ctaText: 'LOJA',
+};
 
 export default function HeroCarousel() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#f7f4ef]">
-      <Swiper
-        modules={[Autoplay, Pagination]}
-        slidesPerView={1}
-        loop
-        autoplay={{ delay: 6000, disableOnInteraction: false }}
-        pagination={{
-          clickable: true,
-          bulletActiveClass: 'swiper-pagination-bullet-active !bg-[#FADADD]',
-        }}
-        className="h-[52vh] w-full md:h-[72vh]"
-      >
-        {atelieBanners.map((banner) => (
-          <SwiperSlide key={banner.id}>
-            <div className="relative h-full w-full overflow-hidden">
-              <div className="absolute inset-0 hidden md:block">
-                <Image
-                  src={banner.imgDesktop}
-                  alt={banner.title}
-                  fill
-                  priority={banner.id === 1}
-                  quality={100}
-                  sizes="100vw"
-                  className={`object-cover ${banner.desktopPosition}`}
-                />
-              </div>
+    // Coloquei esse fundo #F2F2F2 (cinza claro) para camuflar com a parede da foto original
+    <section className="relative w-full overflow-hidden bg-[#F2F2F2]">
+      
+      {/* Aumentei um pouco a altura no PC (h-[85vh]) para a modelo ficar com um tamanho bom */}
+      <div className="relative h-[65vh] md:h-[85vh] w-full flex justify-center items-center overflow-hidden">
+        
+        {/* IMAGEM DESKTOP (PC) - Usando 'object-contain' para não cortar NADA */}
+        <div className="absolute inset-0 hidden md:flex justify-center items-center">
+          <Image
+            src={staticBanner.imgDesktop}
+            alt={staticBanner.title}
+            fill
+            priority
+            quality={100}
+            sizes="100vw"
+            className="object-contain" // <- A mágica acontece aqui! A foto encolhe para caber inteira.
+          />
+        </div>
 
-              <div className="absolute inset-0 block md:hidden">
-                <Image
-                  src={banner.imgMobile}
-                  alt={banner.title}
-                  fill
-                  priority={banner.id === 1}
-                  quality={100}
-                  sizes="100vw"
-                  className={`object-cover ${banner.mobilePosition}`}
-                />
-              </div>
+        {/* IMAGEM MOBILE (Celular) - Mantendo o 'cover' pois a tela do celular já é em pé igual à foto */}
+        <div className="absolute inset-0 flex md:hidden justify-center items-center">
+          <Image
+            src={staticBanner.imgMobile}
+            alt={staticBanner.title}
+            fill
+            priority
+            quality={100}
+            sizes="100vw"
+            className="object-cover object-[50%_15%]" 
+          />
+        </div>
 
-              {/* Degradê mais sutil para combinar com o fundo claro */}
-              <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+        {/* Degradê super sutil apenas na parte de baixo para o botão não sumir */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
 
-              {/* Mudei o justify-end para justify-center para o botão ficar no meio da tela */}
-              <div className="absolute inset-0 z-20 flex items-end justify-center px-4 pb-12 md:pb-16">
-                <Link
-                  href={banner.link}
-                  className="bg-white/95 backdrop-blur-sm border border-transparent px-8 py-3 text-[#333333] font-serif uppercase tracking-[0.2em] text-[10px] md:text-xs shadow-md transition-all hover:bg-white hover:border-[#333333]"
-                >
-                  {banner.ctaText}
-                </Link>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        {/* Botão "LOJA" Centralizado em Terracota */}
+        <div className="absolute inset-0 z-20 flex items-end justify-center px-4 pb-12 md:pb-16 pointer-events-none">
+          {/* pointer-events-auto garante que o botão seja clicável mesmo com a camada acima dele */}
+          <Link
+            href={staticBanner.link}
+            className="pointer-events-auto bg-white/95 backdrop-blur-sm border-2 border-transparent px-10 py-3 text-[#C85A17] font-sans font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs shadow-lg transition-all hover:bg-white hover:border-[#C85A17]"
+          >
+            {staticBanner.ctaText}
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }
