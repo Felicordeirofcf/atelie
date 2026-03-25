@@ -14,7 +14,7 @@ const atelieBanners = [
     imgDesktop: '/banners/banner-1-desktop.jpg',
     imgMobile: '/banners/banner-1-mobile.jpg',
     link: '/categoria/todos',
-    ctaText: 'Shop The Look', // Atualizado para a vibe da imagem
+    ctaText: 'LOJA', // Atualizado para a vibe da imagem
     desktopPosition: 'object-[50%_35%]',
     mobilePosition: 'object-[55%_35%]',
   },
