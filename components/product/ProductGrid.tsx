@@ -26,10 +26,12 @@ export default function ProductGrid() {
   return (
     <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex flex-col items-center mb-10">
-        <h2 className="text-2xl md:text-3xl font-serif uppercase tracking-widest text-[#333333]">
+        {/* Título atualizado para Terracota */}
+        <h2 className="text-2xl md:text-3xl font-serif uppercase tracking-widest text-[#C85A17]">
           Top Sellers ☆
         </h2>
-        <div className="w-16 h-0.5 bg-[#FADADD] mt-4"></div>
+        {/* Linha separadora mais fina e elegante no tom chumbo */}
+        <div className="w-16 h-[1px] bg-[#333333] mt-6"></div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-8">
         {mockProducts.map((product) => (

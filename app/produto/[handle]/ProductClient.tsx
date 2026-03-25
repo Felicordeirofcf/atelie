@@ -33,7 +33,7 @@ export default function ProductClient({ product }: { product: any }) {
         
         {/* Lado Esquerdo: Imagem */}
         <div className="w-full md:w-1/2">
-          <div className="bg-gray-50 aspect-[3/4] relative">
+          <div className="bg-[#FAF9F6] aspect-[3/4] relative">
             <img 
               src={product.image} 
               alt={product.name} 
@@ -45,7 +45,7 @@ export default function ProductClient({ product }: { product: any }) {
         {/* Lado Direito: Informações e Botões */}
         <div className="w-full md:w-1/2 flex flex-col justify-center">
           
-          <h1 className="text-2xl md:text-3xl font-serif uppercase tracking-widest text-[#333333] mb-2">
+          <h1 className="text-2xl md:text-3xl font-serif uppercase tracking-widest text-[#C85A17] mb-2">
             {product.name}
           </h1>
           
@@ -67,7 +67,7 @@ export default function ProductClient({ product }: { product: any }) {
             </div>
             
             {availableVariants.length === 0 ? (
-              <p className="text-red-500 text-sm font-bold uppercase tracking-widest">Produto Esgotado</p>
+              <p className="text-[#C85A17] text-sm font-bold uppercase tracking-widest">Produto Esgotado</p>
             ) : (
               <div className="flex flex-wrap gap-3">
                 {availableVariants.map((variant: any) => (
@@ -76,8 +76,8 @@ export default function ProductClient({ product }: { product: any }) {
                     onClick={() => setSelectedVariant(variant)}
                     className={`px-6 py-2.5 rounded-full border text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
                       selectedVariant?.id === variant.id 
-                        ? 'border-[#333333] bg-[#333333] text-white shadow-md' 
-                        : 'border-gray-300 text-gray-600 hover:border-[#333333] hover:text-[#333333] bg-white'
+                        ? 'border-[#C85A17] bg-[#C85A17] text-white shadow-md' 
+                        : 'border-gray-300 text-gray-600 hover:border-[#C85A17] hover:text-[#C85A17] bg-white'
                     }`}
                   >
                     {variant.size}
@@ -91,7 +91,7 @@ export default function ProductClient({ product }: { product: any }) {
           <button 
             onClick={handleAddToCart}
             disabled={!selectedVariant}
-            className="w-full py-5 bg-[#333333] text-white uppercase tracking-widest text-sm font-bold hover:bg-[#FADADD] hover:text-[#333333] transition-colors disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
+            className="w-full py-5 bg-[#C85A17] text-white uppercase tracking-widest text-sm font-bold hover:bg-[#333333] transition-colors disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
           >
             {selectedVariant ? 'Adicionar à Sacola' : 'Selecione uma opção'}
           </button>
