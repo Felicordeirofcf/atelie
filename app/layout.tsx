@@ -87,9 +87,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-[#FAF9F6] text-[#333333] antialiased`}
       >
-        <div className="w-full bg-[#FADADD] py-2 text-center text-xs font-medium uppercase tracking-widest text-gray-800">
-          Frete Grátis acima de R$ 500 | Cupom: PRIMEIRACOMPRA
-        </div>
+        
 
         <Header />
 

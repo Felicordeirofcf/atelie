@@ -27,14 +27,12 @@ export default function Header() {
           {/* Links Navegação (Desktop) */}
           <nav className="hidden xl:flex gap-5 text-[11px] uppercase tracking-wider font-medium text-gray-700">
             <Link href="/" className="hover:text-[#FADADD] transition-colors font-bold text-[#333333]">Início</Link>
-            <Link href="/categoria/todos" className="hover:text-[#FADADD] transition-colors">Todos</Link>
-            <Link href="/categoria/biquinis" className="hover:text-[#FADADD] transition-colors">Biquínis</Link>
-            <Link href="/categoria/vestidos" className="hover:text-[#FADADD] transition-colors">Vestidos</Link>
-            <Link href="/categoria/tops-e-croppeds" className="hover:text-[#FADADD] transition-colors">Top's e Cropped's</Link>
-            <Link href="/categoria/shorts-jeans" className="hover:text-[#FADADD] transition-colors">Shorts</Link>
-            <Link href="/categoria/conjuntos" className="hover:text-[#FADADD] transition-colors">Conjuntos</Link>
-            <Link href="/categoria/bodys" className="hover:text-[#FADADD] transition-colors">Body's</Link>
-            <Link href="/categoria/sapatos" className="hover:text-[#FADADD] transition-colors">Sapatos</Link>
+            <Link href="/categoria/conjuntos" className="hover:text-[#FADADD] transition-colors">Conjuntos / Vestidos</Link>
+            <Link href="/categoria/cropped-blusas" className="hover:text-[#FADADD] transition-colors">Cropped / Blusas</Link>
+            <Link href="/categoria/jeans" className="hover:text-[#FADADD] transition-colors">Jeans</Link>
+            <Link href="/categoria/shorts" className="hover:text-[#FADADD] transition-colors">Shorts Tecido</Link>
+            <Link href="/categoria/acessorios" className="hover:text-[#FADADD] transition-colors">Acessórios</Link>
+            <Link href="/categoria/sapatos" className="hover:text-[#FADADD] transition-colors">Sandálias / Tênis</Link>
           </nav>
         </div>
 
@@ -104,26 +102,23 @@ export default function Header() {
           <Link href="/categoria/todos" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
             Ver todos os produtos
           </Link>
-          <Link href="/categoria/biquinis" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
-            Biquínis
-          </Link>
-          <Link href="/categoria/vestidos" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
-            Vestidos
-          </Link>
-          <Link href="/categoria/tops-e-croppeds" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
-            Top's e Cropped's
-          </Link>
-          <Link href="/categoria/shorts-jeans" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
-            Shorts Jeans
-          </Link>
           <Link href="/categoria/conjuntos" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
-            Conjuntos
+            Conjuntos / Vestidos
           </Link>
-          <Link href="/categoria/bodys" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
-            Body's
+          <Link href="/categoria/cropped-blusas" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            Cropped / Blusas
           </Link>
-          <Link href="/categoria/sapatos" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
-            Sapatos
+          <Link href="/categoria/jeans" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            Jeans
+          </Link>
+          <Link href="/categoria/shorts" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            Shorts Tecido
+          </Link>
+          <Link href="/categoria/acessorios" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            Acessórios
+          </Link>
+          <Link href="/categoria/sapatos" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors border-b border-gray-100">
+            Sandálias / Tênis
           </Link>
         </nav>
 

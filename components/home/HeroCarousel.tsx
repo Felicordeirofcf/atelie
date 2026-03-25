@@ -14,7 +14,7 @@ const atelieBanners = [
     imgDesktop: '/banners/banner-1-desktop.jpg',
     imgMobile: '/banners/banner-1-mobile.jpg',
     link: '/categoria/todos',
-    ctaText: 'Ver Coleção',
+    ctaText: 'Shop The Look', // Atualizado para a vibe da imagem
     desktopPosition: 'object-[50%_35%]',
     mobilePosition: 'object-[55%_35%]',
   },
@@ -24,7 +24,7 @@ const atelieBanners = [
     imgDesktop: '/banners/banner-2-desktop.jpg',
     imgMobile: '/banners/banner-2-mobile.jpg',
     link: '/categoria/todos',
-    ctaText: 'Aproveitar Descontos',
+    ctaText: 'Descobrir Peças',
     desktopPosition: 'object-[50%_05%]',
     mobilePosition: 'object-[55%_35%]',
   },
@@ -91,12 +91,14 @@ export default function HeroCarousel() {
                 />
               </div>
 
-              <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/35 via-black/10 to-transparent" />
+              {/* Degradê mais sutil para combinar com o fundo claro */}
+              <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
-              <div className="absolute inset-0 z-20 flex items-end justify-end px-4 pb-16 md:px-10 md:pb-14">
+              {/* Mudei o justify-end para justify-center para o botão ficar no meio da tela */}
+              <div className="absolute inset-0 z-20 flex items-end justify-center px-4 pb-12 md:pb-16">
                 <Link
                   href={banner.link}
-                  className="rounded-md bg-white/95 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#333333] shadow-xl transition-all hover:bg-[#FADADD] md:rounded-sm md:px-8 md:py-3.5 md:text-sm md:tracking-[0.22em]"
+                  className="bg-white/95 backdrop-blur-sm border border-transparent px-8 py-3 text-[#333333] font-serif uppercase tracking-[0.2em] text-[10px] md:text-xs shadow-md transition-all hover:bg-white hover:border-[#333333]"
                 >
                   {banner.ctaText}
                 </Link>
