@@ -17,22 +17,23 @@ export default function Header() {
         <div className="flex-1 flex items-center justify-start">
           <button 
             onClick={openMenu}
-            className="xl:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none"
+            className="xl:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none hover:opacity-70 transition-opacity"
           >
-            <span className="block w-6 h-0.5 bg-[#333333]"></span>
-            <span className="block w-6 h-0.5 bg-[#333333]"></span>
-            <span className="block w-6 h-0.5 bg-[#333333]"></span>
+            {/* Ícone do menu hambúrguer no mobile também em terracota */}
+            <span className="block w-6 h-0.5 bg-[#C85A17]"></span>
+            <span className="block w-6 h-0.5 bg-[#C85A17]"></span>
+            <span className="block w-6 h-0.5 bg-[#C85A17]"></span>
           </button>
 
-          {/* Links Navegação (Desktop) */}
-          <nav className="hidden xl:flex gap-5 text-[11px] uppercase tracking-wider font-medium text-gray-700">
-            <Link href="/" className="hover:text-[#FADADD] transition-colors font-bold text-[#333333]">Início</Link>
-            <Link href="/categoria/conjuntos" className="hover:text-[#FADADD] transition-colors">Conjuntos / Vestidos</Link>
-            <Link href="/categoria/cropped-blusas" className="hover:text-[#FADADD] transition-colors">Cropped / Blusas</Link>
-            <Link href="/categoria/jeans" className="hover:text-[#FADADD] transition-colors">Jeans</Link>
-            <Link href="/categoria/shorts" className="hover:text-[#FADADD] transition-colors">Shorts Tecido</Link>
-            <Link href="/categoria/acessorios" className="hover:text-[#FADADD] transition-colors">Acessórios</Link>
-            <Link href="/categoria/sapatos" className="hover:text-[#FADADD] transition-colors">Sandálias / Tênis</Link>
+          {/* Links Navegação (Desktop) - AGORA EM TERRACOTA POR PADRÃO */}
+          <nav className="hidden xl:flex gap-5 text-[11px] uppercase tracking-wider font-bold text-[#C85A17]">
+            <Link href="/" className="hover:opacity-60 transition-opacity">Início</Link>
+            <Link href="/categoria/conjuntos" className="hover:opacity-60 transition-opacity">Conjuntos / Vestidos</Link>
+            <Link href="/categoria/cropped-blusas" className="hover:opacity-60 transition-opacity">Cropped / Blusas</Link>
+            <Link href="/categoria/jeans" className="hover:opacity-60 transition-opacity">Jeans</Link>
+            <Link href="/categoria/shorts" className="hover:opacity-60 transition-opacity">Shorts Tecido</Link>
+            <Link href="/categoria/acessorios" className="hover:opacity-60 transition-opacity">Acessórios</Link>
+            <Link href="/categoria/sapatos" className="hover:opacity-60 transition-opacity">Sandálias / Tênis</Link>
           </nav>
         </div>
 
@@ -56,7 +57,7 @@ export default function Header() {
         <div className="flex-1 flex justify-end">
           <button 
             onClick={openCart}
-            className="text-xs md:text-sm uppercase font-semibold flex items-center gap-2 hover:text-[#FADADD] transition-colors"
+            className="text-xs md:text-sm uppercase font-bold flex items-center gap-2 text-[#C85A17] hover:opacity-60 transition-opacity"
           >
             <span className="hidden md:block text-xs uppercase tracking-wide">Carrinho</span>
             <div className="relative">
@@ -64,7 +65,7 @@ export default function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#FADADD] text-[#333333] text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-[#C85A17] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
                   {totalItems}
                 </span>
               )}
@@ -87,16 +88,17 @@ export default function Header() {
         }`}
       >
         <div className="p-4 flex items-center border-b border-gray-100/50">
-          <button onClick={closeMenu} className="text-gray-500 hover:text-black">
+          <button onClick={closeMenu} className="text-[#C85A17] hover:opacity-70 transition-opacity">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <h2 className="text-[15px] font-medium text-center flex-1 pr-5 text-[#333333]">Menu</h2>
+          <h2 className="text-[15px] font-bold text-center flex-1 pr-5 text-[#C85A17]">Menu</h2>
         </div>
 
-        <nav className="flex-1 flex flex-col pt-2 overflow-y-auto text-[15px] text-[#333333]">
-          <Link href="/" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors font-bold border-b border-gray-100">
+        {/* Links Mobile - AGORA EM TERRACOTA */}
+        <nav className="flex-1 flex flex-col pt-2 overflow-y-auto text-[14px] font-bold text-[#C85A17] uppercase tracking-wider">
+          <Link href="/" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors border-b border-gray-100">
             Início
           </Link>
           <Link href="/categoria/todos" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors">
@@ -122,14 +124,14 @@ export default function Header() {
           </Link>
         </nav>
 
-        <div className="p-5 border-t border-gray-100 flex items-center gap-3 text-[14px] text-[#333333]">
-          <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="p-5 border-t border-gray-100 flex items-center gap-3 text-[14px] text-[#C85A17] font-bold">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>
           <div>
-            <Link href="/minha-conta" onClick={closeMenu} className="hover:underline">Iniciar sessão</Link>
+            <Link href="/minha-conta" onClick={closeMenu} className="hover:opacity-70 transition-opacity">Iniciar sessão</Link>
             <span className="mx-1">.</span>
-            <Link href="/minha-conta" onClick={closeMenu} className="hover:underline">Criar uma conta</Link>
+            <Link href="/minha-conta" onClick={closeMenu} className="hover:opacity-70 transition-opacity">Criar uma conta</Link>
           </div>
         </div>
       </div>

@@ -73,30 +73,30 @@ export default function Minicart() {
           </h2>
           <button
             onClick={closeCart}
-            className="text-2xl leading-none text-gray-400 hover:text-black"
+            className="text-2xl leading-none text-gray-400 hover:text-[#C85A17] transition-colors"
           >
             &times;
           </button>
         </div>
 
-        <div className="border-b border-gray-100 bg-gray-50 p-4 text-center text-sm">
+        <div className="border-b border-gray-100 bg-[#FAF9F6] p-4 text-center text-sm">
           {valorParaFreteGratis > 0 ? (
-            <p>
+            <p className="text-[#333333]">
               Faltam{' '}
-              <span className="font-bold text-[#FADADD]">
+              <span className="font-bold text-[#C85A17]">
                 R$ {valorParaFreteGratis.toFixed(2).replace('.', ',')}
               </span>{' '}
               para <span className="font-bold">FRETE GRÁTIS</span>
             </p>
           ) : (
-            <p className="font-bold uppercase tracking-wide text-green-600">
-              Sucesso! Você tem frete grátis
+            <p className="font-bold uppercase tracking-wide text-[#C85A17]">
+              Sucesso! Você ganhou Frete Grátis
             </p>
           )}
 
-          <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-gray-200">
+          <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-gray-200">
             <div
-              className="h-full bg-[#FADADD] transition-all duration-500"
+              className="h-full bg-[#C85A17] transition-all duration-500"
               style={{ width: `${progressoFrete}%` }}
             />
           </div>
@@ -105,7 +105,7 @@ export default function Minicart() {
         <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
           {items.length === 0 ? (
             <div className="flex flex-1 flex-col items-center justify-center text-gray-400">
-              <p>O seu carrinho está vazio.</p>
+              <p className="font-serif uppercase tracking-widest text-xs">Sua sacola está vazia.</p>
             </div>
           ) : (
             items.map((item) => (
@@ -121,27 +121,27 @@ export default function Minicart() {
                 <div className="flex flex-1 flex-col justify-between">
                   <div>
                     <div className="flex justify-between">
-                      <h3 className="w-40 truncate pr-2 text-sm font-medium uppercase text-[#333333]">
+                      <h3 className="w-40 truncate pr-2 text-xs font-medium uppercase tracking-wider text-[#333333]">
                         {item.name}
                       </h3>
 
                       <button
                         onClick={() => removeItem(item.id)}
-                        className="text-sm text-gray-400 hover:text-red-500"
+                        className="text-sm text-gray-400 hover:text-[#C85A17] transition-colors"
                       >
                         ✕
                       </button>
                     </div>
 
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-1 text-[10px] uppercase tracking-wider text-gray-500">
                       Tamanho: {item.size}
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-[10px] uppercase tracking-wider text-gray-500">
                       Qtd: {item.quantity}
                     </p>
                   </div>
 
-                  <p className="text-sm font-semibold">
+                  <p className="text-sm font-semibold text-[#333333]">
                     R$ {item.price.toFixed(2).replace('.', ',')}
                   </p>
                 </div>
@@ -152,7 +152,7 @@ export default function Minicart() {
 
         <div className="border-t border-gray-100 bg-white p-4">
           <div className="mb-4 flex items-center justify-between">
-            <span className="text-sm font-semibold uppercase text-gray-500">
+            <span className="text-xs font-serif font-bold uppercase tracking-widest text-gray-500">
               Subtotal
             </span>
             <span className="text-lg font-bold text-[#333333]">
@@ -168,16 +168,16 @@ export default function Minicart() {
             <button
               onClick={handleCheckout}
               disabled={isRedirecting}
-              className="block w-full bg-[#333333] py-4 text-center text-sm font-bold uppercase tracking-widest text-white transition-colors hover:bg-[#FADADD] hover:text-[#333333] disabled:cursor-not-allowed disabled:opacity-60"
+              className="block w-full bg-[#C85A17] py-4 text-center text-xs font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-[#333333] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isRedirecting ? 'Redirecionando...' : 'Finalizar Compra'}
             </button>
           ) : (
             <button
               disabled
-              className="w-full cursor-not-allowed bg-gray-200 py-4 text-sm font-bold uppercase tracking-widest text-gray-400"
+              className="w-full cursor-not-allowed bg-gray-100 py-4 text-xs font-bold uppercase tracking-[0.2em] text-gray-400"
             >
-              Carrinho Vazio
+              Sacola Vazia
             </button>
           )}
         </div>

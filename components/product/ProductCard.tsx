@@ -36,7 +36,7 @@ export default function ProductCard({ product }: { product: any }) {
     <div className="group flex cursor-pointer flex-col">
       <Link
         href={`/produto/${product.handle}`}
-        className="relative aspect-[3/4] overflow-hidden bg-gray-100"
+        className="relative aspect-[3/4] overflow-hidden bg-[#FAF9F6]"
       >
         <img
           src={product.image}
@@ -45,7 +45,7 @@ export default function ProductCard({ product }: { product: any }) {
         />
 
         <div className="absolute bottom-0 left-0 flex w-full translate-y-full flex-col gap-3 border-t border-gray-100 bg-white/95 p-4 backdrop-blur-sm transition-transform duration-300 group-hover:translate-y-0">
-          <span className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-[#333333]">
+          <span className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-[#C85A17]">
             Adicionar
           </span>
 
@@ -55,13 +55,13 @@ export default function ProductCard({ product }: { product: any }) {
                 <button
                   key={variant.id}
                   onClick={(e) => handleQuickAdd(e, variant.size)}
-                  className="flex items-center justify-center rounded-full border border-gray-300 px-3 py-1.5 text-[10px] uppercase tracking-wider text-gray-600 transition-all duration-300 hover:border-[#333333] hover:bg-[#333333] hover:text-white"
+                  className="flex items-center justify-center rounded-full border border-gray-300 px-3 py-1.5 text-[10px] uppercase tracking-wider text-gray-600 transition-all duration-300 hover:border-[#C85A17] hover:bg-[#C85A17] hover:text-white"
                 >
                   {variant.size}
                 </button>
               ))
             ) : (
-              <span className="w-full text-center text-xs font-bold uppercase tracking-widest text-red-500">
+              <span className="w-full text-center text-[10px] font-bold uppercase tracking-widest text-[#C85A17]">
                 Esgotado
               </span>
             )}
@@ -70,17 +70,17 @@ export default function ProductCard({ product }: { product: any }) {
       </Link>
 
       <Link href={`/produto/${product.handle}`} className="mt-4 flex flex-col">
-        <h3 className="truncate text-sm font-medium uppercase tracking-widest text-[#333333]">
+        <h3 className="truncate text-[10px] md:text-sm font-medium uppercase tracking-widest text-[#333333] transition-colors group-hover:text-[#C85A17]">
           {product.name}
         </h3>
 
         <div className="mt-1 flex items-center gap-2">
-          <span className="text-sm font-bold text-[#333333]">
+          <span className="text-xs md:text-sm font-bold text-[#333333]">
             R$ {product.price.toFixed(2).replace('.', ',')}
           </span>
 
           {product.originalPrice && product.originalPrice > product.price && (
-            <span className="text-xs text-gray-400 line-through">
+            <span className="text-[10px] md:text-xs text-gray-400 line-through">
               R$ {product.originalPrice.toFixed(2).replace('.', ',')}
             </span>
           )}

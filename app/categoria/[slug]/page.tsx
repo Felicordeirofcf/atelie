@@ -33,9 +33,9 @@ export default async function CategoryPage({ params }: { params: { slug: string 
   return (
     <div className="w-full min-h-screen bg-[#FAF9F6] pt-0 pb-20"> {/* Fundo creme */}
       
-      {/* Cabeçalho Minimalista da Categoria */}
+      {/* Cabeçalho Minimalista da Categoria - Título Terracota */}
       <div className="w-full bg-white py-12 md:py-16 mb-10 flex flex-col items-center justify-center border-b border-[#E5E5E5]">
-        <h1 className="text-3xl md:text-4xl font-serif uppercase tracking-widest text-[#333333] text-center px-4">
+        <h1 className="text-3xl md:text-4xl font-serif uppercase tracking-widest text-[#C85A17] text-center px-4">
           {categoryTitle}
         </h1>
         <div className="w-12 h-[1px] bg-[#333333] mt-6 mb-4"></div>
@@ -53,13 +53,14 @@ export default async function CategoryPage({ params }: { params: { slug: string 
               Coleções
             </h3>
             <div className="flex flex-col gap-4">
-              <Link href="/categoria/todos" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'todos' ? 'font-bold text-[#333333]' : 'text-gray-500 hover:text-[#333333]'}`}>Todos os Produtos</Link>
-              <Link href="/categoria/conjuntos" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'conjuntos' ? 'font-bold text-[#333333]' : 'text-gray-500 hover:text-[#333333]'}`}>Conjuntos & Vestidos</Link>
-              <Link href="/categoria/cropped-blusas" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'cropped-blusas' ? 'font-bold text-[#333333]' : 'text-gray-500 hover:text-[#333333]'}`}>Cropped & Blusas</Link>
-              <Link href="/categoria/jeans" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'jeans' ? 'font-bold text-[#333333]' : 'text-gray-500 hover:text-[#333333]'}`}>Jeans</Link>
-              <Link href="/categoria/shorts" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'shorts' ? 'font-bold text-[#333333]' : 'text-gray-500 hover:text-[#333333]'}`}>Shorts Tecido</Link>
-              <Link href="/categoria/acessorios" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'acessorios' ? 'font-bold text-[#333333]' : 'text-gray-500 hover:text-[#333333]'}`}>Acessórios</Link>
-              <Link href="/categoria/sapatos" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'sapatos' ? 'font-bold text-[#333333]' : 'text-gray-500 hover:text-[#333333]'}`}>Sandálias & Tênis</Link>
+              {/* O link ativo fica Terracota. Os outros ficam escuros e viram Terracota no hover */}
+              <Link href="/categoria/todos" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'todos' ? 'font-bold text-[#C85A17]' : 'text-gray-500 hover:text-[#C85A17]'}`}>Todos os Produtos</Link>
+              <Link href="/categoria/conjuntos" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'conjuntos' ? 'font-bold text-[#C85A17]' : 'text-gray-500 hover:text-[#C85A17]'}`}>Conjuntos & Vestidos</Link>
+              <Link href="/categoria/cropped-blusas" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'cropped-blusas' ? 'font-bold text-[#C85A17]' : 'text-gray-500 hover:text-[#C85A17]'}`}>Cropped & Blusas</Link>
+              <Link href="/categoria/jeans" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'jeans' ? 'font-bold text-[#C85A17]' : 'text-gray-500 hover:text-[#C85A17]'}`}>Jeans</Link>
+              <Link href="/categoria/shorts" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'shorts' ? 'font-bold text-[#C85A17]' : 'text-gray-500 hover:text-[#C85A17]'}`}>Shorts Tecido</Link>
+              <Link href="/categoria/acessorios" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'acessorios' ? 'font-bold text-[#C85A17]' : 'text-gray-500 hover:text-[#C85A17]'}`}>Acessórios</Link>
+              <Link href="/categoria/sapatos" className={`text-xs font-serif uppercase tracking-widest transition-colors ${categorySlug === 'sapatos' ? 'font-bold text-[#C85A17]' : 'text-gray-500 hover:text-[#C85A17]'}`}>Sandálias & Tênis</Link>
             </div>
           </div>
         </aside>
