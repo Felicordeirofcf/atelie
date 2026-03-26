@@ -222,11 +222,9 @@ export default function Header() {
 
           <div>
             <Link href="/minha-conta" onClick={closeMenu} className="hover:opacity-70 transition-opacity">
-              Iniciar sessão
             </Link>
             <span className="mx-1">.</span>
             <Link href="/minha-conta" onClick={closeMenu} className="hover:opacity-70 transition-opacity">
-              Criar uma conta
             </Link>
           </div>
         </div>
