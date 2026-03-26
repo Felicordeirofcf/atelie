@@ -6,26 +6,24 @@ import { useCartStore } from '../../store/cartStore';
 
 export default function Header() {
   const { openCart, items, isMenuOpen, openMenu, closeMenu } = useCartStore();
-  
+
   const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <>
-      <header className="w-full border-b border-gray-100 py-2.5 px-4 md:px-6 flex justify-between items-center sticky top-0 bg-white/95 backdrop-blur-md z-30">
+      <header className="w-full border-b border-gray-100 py-1.5 px-4 md:px-6 flex justify-between items-center sticky top-0 bg-white/95 backdrop-blur-md z-30">
         
         {/* Lado Esquerdo: Links (Desktop) ou Hambúrguer (Mobile) */}
         <div className="flex-1 flex items-center justify-start">
-          <button 
+          <button
             onClick={openMenu}
-            className="xl:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none hover:opacity-70 transition-opacity"
+            className="xl:hidden flex flex-col justify-center items-center w-7 h-7 space-y-1 focus:outline-none hover:opacity-70 transition-opacity"
           >
-            {/* Ícone do menu hambúrguer no mobile também em terracota */}
-            <span className="block w-6 h-0.5 bg-[#C85A17]"></span>
-            <span className="block w-6 h-0.5 bg-[#C85A17]"></span>
-            <span className="block w-6 h-0.5 bg-[#C85A17]"></span>
+            <span className="block w-5 h-0.5 bg-[#C85A17]"></span>
+            <span className="block w-5 h-0.5 bg-[#C85A17]"></span>
+            <span className="block w-5 h-0.5 bg-[#C85A17]"></span>
           </button>
 
-          {/* Links Navegação (Desktop) - AGORA EM TERRACOTA POR PADRÃO */}
           <nav className="hidden xl:flex gap-5 text-[11px] uppercase tracking-wider font-bold text-[#C85A17]">
             <Link href="/" className="hover:opacity-60 transition-opacity">Início</Link>
             <Link href="/categoria/conjuntos" className="hover:opacity-60 transition-opacity">Conjuntos / Vestidos</Link>
@@ -41,21 +39,21 @@ export default function Header() {
         <div className="flex-1 flex justify-center">
           <Link href="/">
             <div className="cursor-pointer flex items-center justify-center">
-              <Image 
-                src="/logo2.png" 
-                alt="Ateliê Luz de Maria Logo" 
-                width={140} 
-                height={45} 
-                className="object-contain h-30 xl:h-20 w-auto" 
-                priority 
-              />
+             <Image
+  src="/logo2.png"
+  alt="Ateliê Luz de Maria Logo"
+  width={240}
+  height={78}
+  className="object-contain h-15 md:h-16 xl:h-[68px] w-auto"
+  priority
+/>
             </div>
           </Link>
         </div>
 
         {/* Lado Direito: Carrinho */}
         <div className="flex-1 flex justify-end">
-          <button 
+          <button
             onClick={openCart}
             className="text-xs md:text-sm uppercase font-bold flex items-center gap-2 text-[#C85A17] hover:opacity-60 transition-opacity"
           >
@@ -74,15 +72,14 @@ export default function Header() {
         </div>
       </header>
 
-      {/* --- MENU MOBILE GAVETA --- */}
       {isMenuOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-40 xl:hidden transition-opacity"
           onClick={closeMenu}
         />
       )}
 
-      <div 
+      <div
         className={`fixed top-0 left-0 h-full w-[85%] max-w-[350px] bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col xl:hidden ${
           isMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
@@ -96,7 +93,6 @@ export default function Header() {
           <h2 className="text-[15px] font-bold text-center flex-1 pr-5 text-[#C85A17]">Menu</h2>
         </div>
 
-        {/* Links Mobile - AGORA EM TERRACOTA */}
         <nav className="flex-1 flex flex-col pt-2 overflow-y-auto text-[14px] font-bold text-[#C85A17] uppercase tracking-wider">
           <Link href="/" onClick={closeMenu} className="px-5 py-3.5 hover:bg-gray-50 transition-colors border-b border-gray-100">
             Início
