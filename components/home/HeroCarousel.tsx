@@ -16,17 +16,15 @@ export default function HeroCarousel() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Ativa a animação de introdução após o carregamento do componente
     setIsLoaded(true);
   }, []);
 
   return (
     <section className="relative w-full overflow-hidden bg-[#EAE8E4]">
       
-      {/* --- Estrutura para Efeito Parallax e Movimento --- */}
       <div className="relative h-[90vh] md:h-[95vh] w-full flex justify-center items-center overflow-hidden">
         
-        {/* IMAGEM DESKTOP - Com animação de zoom sutil para profundidade */}
+        {/* IMAGEM DESKTOP */}
         <div className="absolute inset-0 hidden md:flex justify-center items-center scale-105 animate-subtle-zoom">
           <Image
             src={staticBanner.imgDesktop}
@@ -52,40 +50,35 @@ export default function HeroCarousel() {
           />
         </div>
 
-        {/* Degradê sofisticado e escuro na base para legibilidade máxima do texto branco/terracota */}
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
-        {/* --- ÁREA DO CONTEÚDO (JANELA DE DESIGN) --- */}
         <div className={`absolute bottom-0 left-0 z-20 w-full md:w-[600px] p-6 md:p-12 transition-all duration-1000 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           
           <div className="flex flex-col items-start space-y-3">
             
-            {/* Título da Coleção reestilizado */}
             <h1 className="text-white text-[28px] md:text-[45px] font-extrabold uppercase tracking-tight leading-none drop-shadow-lg">
               <span className="text-[#C85A17]"></span> <br /> 
               <span className="block text-[14px] md:text-[20px] font-normal tracking-wide lowercase mt-1 text-white/90"></span>
             </h1>
 
-            {/* A Frase (Mantra da Marca) - SUPER DESTACADA E ELEGANTE */}
-            <div className="flex items-center gap-3 text-white/95 text-[10px] md:text-[13px] uppercase tracking-[0.4em] font-medium pt-3 border-t border-white/20 w-full">
+            {/* Frase em Terracota */}
+            <div className="flex items-center gap-3 text-[#C85A17] text-[10px] md:text-[13px] uppercase tracking-[0.4em] font-bold pt-3 border-t border-white/20 w-full">
               <span>Elegância</span>
-              <span className="text-[#C85A17]">●</span>
+              <span>●</span>
               <span>estilo</span>
-              <span className="text-[#C85A17]">●</span>
+              <span>●</span>
               <span>identidade</span>
             </div>
 
-            {/* --- O BOTÃO - PUXADO BEM MAIS PARA BAIXO E INTERATIVO --- */}
-            {/* O container flex-end e mt-20 garantem que ele esteja baixo e alinhado */}
+            {/* O BOTÃO - Texto em Terracota e fundo Branco */}
             <div className="pt-20 w-full flex justify-end pointer-events-none">
               <Link
                 href={staticBanner.link}
-                className="pointer-events-auto group relative flex items-center gap-3 bg-white/10 backdrop-blur-lg border-2 border-white/40 px-10 py-4 text-white font-sans font-bold uppercase tracking-[0.25em] text-[11px] md:text-xs shadow-xl transition-all duration-300 hover:bg-[#C85A17] hover:border-transparent"
+                className="pointer-events-auto group relative flex items-center gap-3 bg-white/95 backdrop-blur-lg border-2 border-transparent px-10 py-4 text-[#C85A17] font-sans font-bold uppercase tracking-[0.25em] text-[11px] md:text-xs shadow-xl transition-all duration-300 hover:scale-105 hover:bg-white hover:border-[#C85A17]"
               >
                 {staticBanner.ctaText}
                 
-                {/* Ícone de Seta que se move no hover */}
-                <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="#C85A17" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
@@ -95,7 +88,6 @@ export default function HeroCarousel() {
         </div>
       </div>
 
-      {/* --- CSS Necessário para as animações customizadas --- */}
       <style jsx global>{`
         @keyframes subtle-zoom {
           0% { transform: scale(1); }
