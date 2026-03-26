@@ -13,9 +13,9 @@ export default function Header() {
     <>
       <header className="w-full border-b border-gray-100 px-4 md:px-6 py-2 sticky top-0 bg-white/95 backdrop-blur-md z-30">
         {/* MOBILE */}
-        <div className="relative flex items-center justify-between xl:hidden min-h-[64px]">
-          {/* Esquerda: menu */}
-          <div className="w-[44px] flex justify-start">
+        <div className="relative flex items-center justify-between xl:hidden min-h-[68px]">
+          {/* Menu */}
+          <div className="w-[40px] flex justify-start shrink-0">
             <button
               onClick={openMenu}
               className="flex flex-col justify-center items-center w-8 h-8 space-y-1 focus:outline-none hover:opacity-70 transition-opacity"
@@ -27,22 +27,22 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Centro absoluto: logo */}
-          <div className="absolute left-1/2 -translate-x-1/2">
+          {/* Logo mobile centralizada */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center">
             <Link href="/" aria-label="Ir para a página inicial">
               <Image
-                src="/logo2.png"
-                alt="Ateliê Luz de Maria Logo"
+                src="/logo-mobile.png"
+                alt="Ateliê Luz de Maria"
                 width={220}
                 height={72}
-                className="object-contain h-[42px] w-auto"
+                className="object-contain h-[48px] w-auto max-w-[220px]"
                 priority
               />
             </Link>
           </div>
 
-          {/* Direita: carrinho */}
-          <div className="w-[44px] flex justify-end">
+          {/* Carrinho */}
+          <div className="w-[40px] flex justify-end shrink-0">
             <button
               onClick={openCart}
               className="relative text-[#C85A17] hover:opacity-60 transition-opacity"
@@ -104,10 +104,10 @@ export default function Header() {
             <Link href="/" aria-label="Ir para a página inicial">
               <Image
                 src="/logo2.png"
-                alt="Ateliê Luz de Maria Logo"
-                width={230}
-                height={75}
-                className="object-contain h-[66px] w-auto"
+                alt="Ateliê Luz de Maria"
+                width={260}
+                height={84}
+                className="object-contain h-[70px] w-auto"
                 priority
               />
             </Link>
@@ -148,6 +148,7 @@ export default function Header() {
         </div>
       </header>
 
+      {/* Overlay */}
       {isMenuOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40 xl:hidden transition-opacity"
@@ -155,6 +156,7 @@ export default function Header() {
         />
       )}
 
+      {/* Menu mobile */}
       <div
         className={`fixed top-0 left-0 h-full w-[85%] max-w-[350px] bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col xl:hidden ${
           isMenuOpen ? 'translate-x-0' : '-translate-x-full'
