@@ -61,20 +61,18 @@ export default function HeroCarousel() {
               <span className="block text-[14px] md:text-[20px] font-normal tracking-wide lowercase mt-1 text-white/90"></span>
             </h1>
 
-            {/* Frase em Terracota */}
-            <div className="flex items-center gap-3 text-[#C85A17] text-[10px] md:text-[13px] uppercase tracking-[0.4em] font-bold pt-3 border-t border-white/20 w-full">
+            <div className="flex items-center gap-3 text-white/95 text-[10px] md:text-[13px] uppercase tracking-[0.4em] font-medium pt-3 border-t border-white/20 w-full">
               <span>Elegância</span>
-              <span>●</span>
+              <span className="text-[#C85A17]">●</span>
               <span>estilo</span>
-              <span>●</span>
+              <span className="text-[#C85A17]">●</span>
               <span>identidade</span>
             </div>
 
-            {/* O BOTÃO - Texto em Terracota e fundo Branco */}
             <div className="pt-20 w-full flex justify-end pointer-events-none">
               <Link
                 href={staticBanner.link}
-                className="pointer-events-auto group relative flex items-center gap-3 bg-white/95 backdrop-blur-lg border-2 border-transparent px-10 py-4 text-[#C85A17] font-sans font-bold uppercase tracking-[0.25em] text-[11px] md:text-xs shadow-xl transition-all duration-300 hover:scale-105 hover:bg-white hover:border-[#C85A17]"
+                className="pointer-events-auto group relative flex items-center gap-3 bg-white/90 backdrop-blur-lg border-2 border-transparent px-10 py-4 text-[#C85A17] font-sans font-bold uppercase tracking-[0.25em] text-[11px] md:text-xs shadow-xl transition-all duration-300 hover:bg-white hover:scale-105 hover:border-[#C85A17]"
               >
                 {staticBanner.ctaText}
                 
