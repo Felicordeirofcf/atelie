@@ -42,11 +42,11 @@ export default function Header() {
           <Link href="/">
             <div className="cursor-pointer flex items-center justify-center">
               <Image 
-                src="/logo.png" 
+                src="/logo2.png" 
                 alt="Ateliê Luz de Maria Logo" 
                 width={140} 
                 height={45} 
-                className="object-contain h-9 xl:h-10 w-auto" 
+                className="object-contain h-30 xl:h-20 w-auto" 
                 priority 
               />
             </div>
